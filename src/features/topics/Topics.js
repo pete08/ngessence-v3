@@ -8,21 +8,21 @@ import { selectTopics } from "./topicsSlice"
 export default function Topics() {
   const topics = useSelector(selectTopics);
 
-  // if (topics.length < 0) {
-  //   return (
-  //     <section className="center">
-  //       <h1>Topics</h1>
-  //       <ul className="topics-list">...None
-  //       </ul>
-  //       <Link
-  //         to={ROUTES.newTopicRoute()}
-  //         className="button create-new-topic-button"
-  //       >
-  //         Create New Topic
-  //       </Link>
-  //     </section>
-  //   );
-  // }
+  if (topics.length < 0) {
+    return (
+      <section className="center">
+        <h1>Topics</h1>
+        <ul className="topics-list">...None
+        </ul>
+        <Link
+          to={ROUTES.newTopicRoute()}
+          className="button create-new-topic-button"
+        >
+          Create New Topic
+        </Link>
+      </section>
+    );
+  }
   return (
     <section className="center">
       <h1>Topics</h1>
