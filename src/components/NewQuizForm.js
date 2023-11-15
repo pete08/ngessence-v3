@@ -6,6 +6,7 @@ import ROUTES from "../app/routes";
 // import selectors
 import {selectTopics} from "../features/topics/topicsSlice";
 import {selectQuizzes, addQuiz } from "../features/quizzes/quizzesSlice";
+import { addCards } from "../features/cards/cardsSlice";
 
 export default function NewQuizForm() {
   const [name, setName] = useState("");
@@ -14,7 +15,9 @@ export default function NewQuizForm() {
   const navigate = useNavigate();
   const topics = useSelector(selectTopics);
   const quizzes = useSelector(selectQuizzes);
+  // const someCards = useSelector(selectCards);
   const dispatch = useDispatch();
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,15 +28,23 @@ export default function NewQuizForm() {
     const cardIds = [];
 
     // create the new cards here and add each card's id to cardIds
+    cards.forEach((card) => {
+      const front = card.front;
+      const back = card.back;
+      const id = uuidv4();
+      cardIds.push(id);
+      dispatch(addCards({id, front, back}));
+    })
+
     // create the new quiz here
-
-    const id = uuidv4();
-
+    // to consolelog: declare the uuid prior to quizzSlice addQuiz action creator
+    const newquizId = uuidv4();
+    console.log(`new Quiz handleSubmit's values:\nid:${newquizId}\ntopicId:${topicId}\ncardIds:${cardIds} `)
+    
     // dispatch add quiz action
-    console.log(`the new Quiz handleSubmit's values:\nid:${id}\ntopicId:${topicId}\ncardIds:${cardIds} `)
-    dispatch(addQuiz({id, name, topicId, cardIds})) 
+    dispatch(addQuiz({id:newquizId, name, topicId, cardIds})) 
     navigate(ROUTES.quizzesRoute());
-    console.log(`the Quizzes are now: ${JSON.stringify(quizzes)}`);
+    console.log(`current Quizzes: ${JSON.stringify(quizzes)}`);
   };
 
   const addCardInputs = (e) => {

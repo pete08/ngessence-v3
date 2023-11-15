@@ -1,20 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { addQuiz } from "../quizzes/quizzesSlice";
 
-//action creator
-// export const addTopic = ({id, name, icon}) => {
-//     console.log(`addTopic's id:${id}, \nname:${name},\n icon:${icon}`)
-//     return {
-//         type: "addTopic",
-//         payload: {
-//             "id": id,
-//             "name": name,
-//             "icon": icon,
-//             "quizIds": []
-//         }
-//     }
-// }
-
 // slice 
 const topicsSlice = createSlice({
     name:'topics',

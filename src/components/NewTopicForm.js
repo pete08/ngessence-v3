@@ -22,12 +22,12 @@ export default function NewTopicForm() {
     }
     // dispatch new topic
     let id = uuidv4();
-    console.log(`the new Topic handleSubmit's values:\nid:${id}\nname:${name}\nicon:${icon} `)
+    console.log(`new Topic handleSubmit's values:\nid:${id}\nname:${name}\nicon:${icon} `)
     dispatch(addTopic({id, name, icon}));
     setName("");
     setIcon("");
     navigate(ROUTES.topicsRoute());
-    console.log(`the Topics are now: ${JSON.stringify(topics)}`)
+    console.log(`Current Topics: ${JSON.stringify(topics)}`)
   };
 
 
