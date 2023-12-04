@@ -165,7 +165,8 @@ option {
 }
 
 .text-content > p {
-  font-size: 14px;
+  font-size: 12px;
+  text-align: left;
 }
 
 li:not(:last-child) {

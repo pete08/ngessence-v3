@@ -31,9 +31,10 @@ export default function Sequences() {
           <li className="topic" key={sequence.id}>
           <Link to={ROUTES.sequenceRoute(sequence.id)} className="topic-link">
            <div className="topic-container">
-             <img src={sequence.icon} alt="" />
+             {/* <img src={sequence.icon} alt="" /> */}
              <div className="text-content">
                <h2>{sequence.name}</h2>
+               <h3>Illumina quality passes: {sequence.illuminaPass ? "True": "False"}</h3>
                <p>SequenceResults:{sequence.sequenceResult? sequence.sequenceResult: " Null"} </p>
              </div>
            </div>

@@ -15,6 +15,7 @@ const sequencesSlice = createSlice({
                 timestamp: timestamp,
                 name: name,
                 sequenceResult: sequenceResult,
+                illuminaPass: false
             }
         }
     },
