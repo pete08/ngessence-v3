@@ -23,6 +23,21 @@ export default function AppLayout() {
                     New Quiz
                     </NavLink>
                 </li>
+                <li>
+                    <NavLink to={ROUTES.sequencesRoute()} >
+                    Sequences
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to={ROUTES.newSequenceRoute()} >
+                    New Sequence
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to={ROUTES.scriptRunner()} >
+                    Script Runner
+                    </NavLink>
+                </li>
                 </ul>
             </nav>
             <Outlet/>
