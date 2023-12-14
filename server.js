@@ -38,7 +38,7 @@ app.get("/runScript", (req, res) => {
   // res.setHeader("Access-Control-Allow-Methods", "GET");
   // res.setHeader("Access-Control-Allow-Headers", "Content-Type"); 
 
-  const scriptPath = "./src/api/sequencescript.sh";
+  const scriptPath = "./src/api/smallscript.sh";
 
   exec(`sh ${scriptPath}`, (error, stdout, stderr) => {
     if (error) {
@@ -65,9 +65,6 @@ app.post("/upload", upload.single("input-file"), (req, res) => {
   // console.log(`\n\nfrom server 5000, the body: requestBody.filepath sent to POST /upload is:${filepath}\n requestBody.id is:${id}`)
   // Execute the shell script
 
-  //START HERE, attempt to shorten the bash shell script to the necessary items only, in order to improve timing 
-  //START HERE, attempt to shorten the bash shell script to the necessary items only, in order to improve timing 
-  //START HERE, attempt to shorten the bash shell script to the necessary items only, in order to improve timing 
   exec(`sh ./src/api/sequencescript.sh ${filepath} ${outputfilepath}`, (error, stdout, stderr) => {
     if (error) {
       console.error(`Error executing the script: ${error}`);
