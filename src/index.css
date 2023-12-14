@@ -82,7 +82,8 @@ select {
   border-radius: 3px;
   padding: 8px 10px;
   width: 100%;
-  margin-bottom: 16px;
+  margin-bottom: 6px;
+  text-align: left;
 }
 
 select:invalid,
@@ -94,6 +95,7 @@ input::placeholder {
 .form-section {
   padding-top: 20px;
   padding-bottom: 30px;
+  text-align: left;
 }
 
 .center {

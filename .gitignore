@@ -23,6 +23,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 *practice*
+sequencescript-copy.sh
 server-01.js
 /src/data/*.fasta
 /src/data/*.fastq

@@ -32,10 +32,10 @@ export default function Sequences() {
           <Link to={ROUTES.sequenceRoute(sequence.id)} className="topic-link">
            <div className="topic-container">
              {/* <img src={sequence.icon} alt="" /> */}
-             <div className="text-content">
+             <div className="text-content" key={sequence.id}>
                <h2>{sequence.name}</h2>
                <h3>Illumina quality passes: {sequence.illuminaPass ? "True": "False"}</h3>
-               <p>SequenceResults:{sequence.sequenceResult? sequence.sequenceResult: " Null"} </p>
+               <p>SequenceResults:{(sequence.sequenceResult) ? sequence.sequenceResult.substring(0,50): " Null"} </p>
              </div>
            </div>
          </Link>

@@ -1,39 +1,16 @@
 #!/bin/bash
-hello () {
-    echo "hello All! \ndope shit!
-    \nthis is a new freaky deeky line!
-    \nthis is a new freaky deeky line!
-    \nthis is a new freaky deeky line!"
-}
+#sequencescript-practice01-trythis
+fullfile=$1
+outputfilepath=$2
 
-getit () {
-#!/bin/bash
+# filename=$(basename -- "$fullfile")
+# extension="${filename##*.}"
+# filename="${filename%.*}"
+# echo "filename is: $filename"
+# echo "extension is: $extension"
+# echo "HOME directory is: $HOME"
+echo "PWD directory is: $PWD"
 
-# Specify the path to the file within your React app
-file_path="src/data/16s_426-read-1.fastq"
 
-# Check if the file exists
-if [ -f "$file_path" ]; then
-  # Read the contents of the file and print it
-  cat "$file_path" | head -n 25
-else
-  # If the file doesn't exist, print an error message
-  echo "File not found: $file_path"
-  exit 1
-fi
-
-}
-
-# hello
-
-getit
-
-#Start Here:
-# 1. find out how to run a more complex bash shell script
-# 2. Can Hannah demo how bbmap works; Noting:
-    # 2a. input file(s)
-    # 2b. shell scripts (e.g. bbmap/...sh files)
-    # 2c. full output and output type
-# 3. Use an outside data source as a variable input when for bash shell script 
-# 4. Use a state value (e.g. state.id or state.id.datacontents) as an input for bash shell script
-# 5. Save output from bash shell script into state data (e.g. state.id.output)
+# bbduk.sh in=$1 out=int01/{$1}_trim.{$outputext} ref=resources/adapters.fa ktrim=r k=23 mink=11 hdist=1;
+source $PWD/src/api/bbtools/bbmap/bbduk.sh in=$fullfile out=$outputfilepath ref=$PWD/src/api/bbtools/bbmap/resources/adapters.fa ktrim=r k=23 mink=11 hdist=1;
