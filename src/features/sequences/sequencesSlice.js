@@ -9,7 +9,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const addSequence = createAsyncThunk(
     'sequences/addSequence',
     async ( { formData  } ) => {
-        const { filepath, outputfilepath, id, timestamp, name, outputExt, getoutputfilepath } = formData; 
+        const { filepath, outputfilepath, id, timestamp, name, outputExt, getoutputfilepath, rawInput } = formData; 
         console.log(`This is the formData sent to sequencesSlice's addSequence thunk action:\n`, formData);
         console.log(`This is the formData's filepath sent to sequencesSlice's:\n`, filepath);
         console.log(`This is the formData's outputfilepath sent to sequencesSlice's addSequence thunk action:\n`, outputfilepath);
@@ -26,18 +26,32 @@ export const addSequence = createAsyncThunk(
         //     method: 'POST',
         //     body: requestBody
         //     })
-            
-        const response = await fetch(`http://localhost:5000/${getoutputfilepath}`)
-        .then(responseTrim => responseTrim.text())
-        .then(sequenceResult => ({
+        const response = await fetch(`http://localhost:3000/${getoutputfilepath}`);
+        console.log(`Response Status: ${response.status}`)
+        // console.log(`ResponseResult Text response.text(): ${sequenceResult}`)
+        const sequenceResult = await response.text();
+        console.log("HELLO! FROM THE INSIDE!!!!!\nHELLLO IS YOU THERE??")
+
+        return {
             id: id,
             filepath: filepath,
             timestamp: timestamp,
             name: name + '-trim.' + outputExt,
             illuminaPass: false,
-            sequenceResult: sequenceResult}))
+            rawInput: rawInput,
+            sequenceResult: sequenceResult
+        };
+        // fetch(`http://localhost:3000/${getoutputfilepath}`)
+        // .then((response) => response.text())
+        // .then((sequenceResult) => ({
+        //     id: id,
+        //     filepath: filepath,
+        //     timestamp: timestamp,
+        //     name: name + '-trim.' + outputExt,
+        //     illuminaPass: false,
+        //     sequenceResult: sequenceResult}))
         
-        return response
+        // // return response
     }
 );
     
@@ -50,8 +64,8 @@ export const addSequence = createAsyncThunk(
         // });
         // const responseData = await response.json();
 
-        // const responseTrim = await fetch(`http://localhost:5000/${getoutputfilepath}`);
-        // const sequenceResult = await responseTrim.text();
+        // const response = await fetch(`http://localhost:5000/${getoutputfilepath}`);
+        // const sequenceResult = await response.text();
 
         // return {
         //     id: id,
@@ -91,8 +105,8 @@ export const addSequence = createAsyncThunk(
 
 // const generateTrim = (getoutputfilepath) => {
 //   return new Promise((resolve, reject) => {
-//     if (const responseTrim = fetch(`http://localhost:5000/${getoutputfilepath}`).text()) {
-//       resolve(objectTrim.sequenceResult = responseTrim);
+//     if (const response = fetch(`http://localhost:5000/${getoutputfilepath}`).text()) {
+//       resolve(objectTrim.sequenceResult = response);
 //     } else {
 //       reject(new Error('Failed to upload'));
 //     }
@@ -107,7 +121,7 @@ export const addSequence = createAsyncThunk(
 //     console.error(err);
 //   })
 //   .finally((getoutputfilepath) => {
-//     const responseTrim = fetch(`http://localhost:5000/${getoutputfilepath}`).text();
+//     const response = fetch(`http://localhost:5000/${getoutputfilepath}`).text();
 //   });
 
 
@@ -142,9 +156,10 @@ const sequencesSlice = createSlice({
             // const {id, name, timestamp, newSeqFileTrimContent} = action.payload;
             state.isLoadingSequences = false;
             state.hasError = false;
-            console.log(`what is the action.payload???:\n${action.payload}`)
-            console.log(`what is the action.payload??? , JSON.stringify(action.payload):\n${JSON.stringify(action.payload)}`)
-            console.log(`what is the action.payload.id???:\n${action.payload.id}`)
+            state.sequences[action.payload.id]=action.payload;
+            // console.log(`what is the action.payload???:\n${action.payload}`)
+            // console.log(`what is the action.payload??? , JSON.stringify(action.payload):\n${JSON.stringify(action.payload)}`)
+            // console.log(`what is the action.payload.id???:\n${action.payload.id}`)
             // state.sequences[id] = {
             //     id: id,
             //     timestamp: timestamp,
@@ -152,9 +167,8 @@ const sequencesSlice = createSlice({
             //     seqTrim: newSeqFileTrimContent,
             //     illuminaPass: false
             // };
-            console.log(`state.sequences is...${JSON.stringify(state.sequences)}`)
-            state.sequences[action.payload.id]=action.payload;
-            console.log(`state.sequences is now!!!!...${JSON.stringify(state.sequences)}`)
+            // console.log(`state.sequences is...${JSON.stringify(state.sequences)}`)
+            // console.log(`state.sequences is now!!!!...${JSON.stringify(state.sequences)}`)
           })
           .addCase(addSequence.rejected, (state, action) => {
             state.isLoadingSequences = false;

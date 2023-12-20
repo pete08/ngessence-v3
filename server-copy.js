@@ -32,36 +32,26 @@ app.options('/upload', (req, res) => {
 });
 
 
-// allow CORS requests from outside servers to access via path: port/path (5000/runScript)
-app.get("/runScript", (req, res) => {
-  // res.setHeader("Access-Control-Allow-Origin", "*");
-  // res.setHeader("Access-Control-Allow-Methods", "GET");
-  // res.setHeader("Access-Control-Allow-Headers", "Content-Type"); 
-
-  const scriptPath = "./src/api/smallscript.sh";
-
-  exec(`sh ${scriptPath}`, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Error executing the script: ${error}`);
-      res.status(500).send("Internal Server Error");
-      return;
-    }
-
-    // Send the script result back to the client
-    res.send(stdout);
-  });
-});
-
 
 app.post("/upload", upload.single("input-file"), (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
+  
   const { filepath, outputfilepath } = req.body;
+  console.log(`\nfilepath is: ${filepath}\n`)
+  console.log(`\noutputfilepath is: ${outputfilepath}\n`)
+  
   // Access the uploaded file using req.file.buffer
   const fileContent = req.file.buffer;
-
+  // const fileContent = req.file.buffer.toString();
+  const directory = path.dirname(filepath);
+  console.log(`\ndirectory is: ${directory}\n`)
+  
+  if (!fs.existsSync(directory)) {
+    fs.mkdirSync(directory, { recursive: true });
+  }
+  fs.writeFileSync(filepath, fileContent);
   //START HERE: current ERROR "Server is running on port 5000 Error: ENOENT: no such file or directory, open './src/data/int/024.fasta'"
   // [1]. Solve Error: upload a fasta file to ./src/data/int/
     // [1a]. why did it used to work and now NO file is being uploaded after handleSubmit POST method to localhost:5000/uplaod?
@@ -72,17 +62,30 @@ app.post("/upload", upload.single("input-file"), (req, res) => {
   // [4]. consider re-doing the process of uploading, restructuiring components within React App to separate the NewSeq processing: uploading file, processing (bashscript) file, and updating state (addSequence()). In hopes that processing works consistantly and effectively and consistantly, currently the problem is when express server POST method is hit it requires too much time and sometimes breaks (~1.5 seconds per NETWORK log - Web Developer Tools)
   
   
-  fs.writeFileSync(filepath, fileContent);
+  // fs.writeFileSync(filepath, fileContent);
+  // res.json({ result: outputfilepath });
+
+  
+});
+
+app.post("/runSeqTrim", (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  const { id, inputFilePath, outputFileTrimPath } = req.body;
+
   
   
   // console.log(`\n\nfrom server 5000, the body: requestBody.filepath sent to POST /upload is:${filepath}\n requestBody.id is:${id}`)
   // Execute the shell script
 
-  exec(`sh ./src/api/sequencescript-true.sh ${filepath} ${outputfilepath}`, (error, stdout, stderr) => {
+  exec(`sh ./src/api/sequencescript-true.sh ${inputFilePath} ${outputFileTrimPath}`, (error, stdout, stderr) => {
     if (error) {
       console.error(`Error executing the script: ${error}`);
       return res.status(500).json({ error: 'Internal Server Error' });
     }
+    stdout.id = id;
     // Send the result back to the client
     res.json({ result: stdout });
     
@@ -90,6 +93,7 @@ app.post("/upload", upload.single("input-file"), (req, res) => {
   // console.log(`this concludes the app.post("/upload",...=>{}`);
   
 });
+
 
 // server listening for requests to port 5000
 app.listen(port, () => {

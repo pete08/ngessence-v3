@@ -3,7 +3,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import topicsReducer from "../features/topics/topicsSlice";
 import quizzesReducer from "../features/quizzes/quizzesSlice";
 import cardsReducer from "../features/cards/cardsSlice";
-import sequencesReducer from "../features/sequences/sequencesSlice";
+// import sequencesReducer from "../features/sequences/sequencesSlice";
+import sequencesReducer from "../features/sequences/sequencesSlice-copy";
 
 export default configureStore({
   reducer: {

@@ -17,7 +17,8 @@ import Topic from "../features/topics/Topic";
 import Quiz from "../features/quizzes/Quiz";
 import Quizzes from "../features/quizzes/Quizzes";
 import AppLayout from "./AppLayout";
-import Sequences from "../features/sequences/Sequences";
+// import Sequences from "../features/sequences/Sequences";
+import Sequences from "../features/sequences/Sequences-copy";
 
 export default function App() {
   return (
