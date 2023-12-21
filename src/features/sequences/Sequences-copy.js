@@ -8,7 +8,7 @@ import { selectSequences } from "./sequencesSlice-copy";
 import NewSequenceForm from "../../components/NewSequenceForm";
 
 // START HERE start here 2023-12-20
-// currently the localhost:5000/sequences does not show individual sequences (See showSequenceDetails function line 18). Troubleshoot to determine what is preventing the sequences-copy.js (this file) from showing Sequnece-copy.js return stmt.
+// currently the localhost:5000/sequences does not show individual sequences (See showSequenceDetails function line 19). Troubleshoot to determine what is preventing the sequences-copy.js (this file) from showing Sequence-copy.js return stmt.
 
 export default function Sequences() {
   const allSequences = useSelector(selectSequences);
@@ -16,9 +16,9 @@ export default function Sequences() {
   // useEffect(() => {
   // }, [allSequences])
 
-  const showSequenceDetails = () => {
+  const showSequenceDetails = (allSequences) => {
     for (const sequence in allSequences) {
-      return <Sequence sequence={allSequences[sequence]} />
+      return <Sequence sequence={allSequences[sequence]} />;
     }
   }
 
@@ -41,22 +41,21 @@ export default function Sequences() {
       <h1>Add Sequence</h1>
       <NewSequenceForm />
       <section className="center">
-        <h2>Sequences</h2>
-        <ul className="topics-list"> you've uploaded {Object.keys(allSequences).length} sequences in your session.
-        <hr />
+        <h2>Sequences:</h2>
+        <p>you've uploaded {Object.keys(allSequences).length} sequences in your session.</p>
+        {/* <div> className="topics-list"> you've uploaded {Object.keys(allSequences).length} sequences in your session. < /div> */}
         {/* <div className="article-content-container"> */}
         {/* <h3 className="article-title">  */}
         {/* <p className="article-preview">  */}
-          {showSequenceDetails()}
-        </ul>
         {/* <Link
           to={ROUTES.newSequenceRoute()}
           className="button create-new-topic-button"
-        >
+          >
           Create New Sequence
         </Link> */}
-
+        <hr/>
       </section>
+      {showSequenceDetails(allSequences)}
     </section>
   );
 }

@@ -27,7 +27,7 @@ nav ul li {
   margin-bottom: 0 !important;
 }
 
-ul {
+/* ul {
   margin: 0 auto;
   text-align: center;
 }
@@ -35,7 +35,7 @@ ul {
 li {
   display: inline-block;
   vertical-align: top;
-}
+} */
 
 nav a {
   color: white;
@@ -65,10 +65,10 @@ button,
 .button {
   background: #ffffff;
   border: 1px solid #03a8d8;
-  border-radius: 20px;
+  border-radius: 15px;
   text-align: center;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 12px;
   color: #03a8d8;
   padding: 10px 21px;
   text-decoration: none;
@@ -229,4 +229,38 @@ li:not(:last-child) {
   color: white;
   padding: 73px 44px;
   width: 100%;
+}
+
+.wrapper {
+  display: grid;
+  background-color: #ffffff;
+  border: 2px solid #b736ff;
+  border-radius: 10px;
+}
+.wrapper > div {
+  padding: 1em;
+  border: 1px solid #b936ff1a;
+  background-color:#ffffff;
+  border-radius: 10px;
+}
+
+.wrapper > div.GridItemWButton {
+  padding: 0.5em;
+  border: 1px none #b936ff1a;
+  background-color:#ffffff;
+  border-radius: 10px;
+}
+
+.wrapper > div > button {
+  background: #ffffff;
+  border: 1px solid #03a8d8;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+  color: #03a8d8;
+  padding: 10px 15px;
+  margin: 0px 10px;
+  text-decoration: none;
+  cursor: pointer;
 }

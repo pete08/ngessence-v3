@@ -50,12 +50,13 @@ export default function Sequence({sequence}) {
   };
 
   return (
-    <div className="topic-container" key={sequence.id}>
+    <div class="wrapper">
+    {/* <div className="topic-container" key={sequence.id}> */}
     {/* <div className="text-content" key={sequence.id}> */}
-      <h2>{sequence.seqTrimName}:{sequence.seqTrimTimeStamp}</h2>
-      <h3>Illumina quality passes: {(sequence.illuminaPass === true) ? "True": "False"}</h3>
-      <p>SequenceTrimResults:{(sequence.seqTrim == null) ? <button onClick={handleClick()}> Click me - Run bbDuk Trim </button>: sequence.seqTrim.substring(0,50)} </p>
-      <hr/>
-    </div>
+
+      <div> {sequence.seqTrimName}:{(sequence.seqTrimTimeStamp == null) ? "": sequence.seqTrimTimeStamp.toString()}</div>
+      <div> Illumina quality passes: {(sequence.illuminaPass == true) ? "True": "False"}</div>
+      <div class="GridItemWButton"> {(sequence.seqTrim == null) ? <button onClick={handleClick}>Run bbDuk Trim</button>: sequence.seqTrim.substring(0,50)} </div>
+    </div>  
   );
 }
