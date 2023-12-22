@@ -20,22 +20,25 @@ const getDateTime = () => {
 export default function Sequence({sequence}) {
   const dispatch = useDispatch();
   console.log("hey there from inside Sequence-copy");
-  console.log(`this the sequence: ${sequence}`)
-  console.log(`this the sequence.id: ${sequence.id}`)
-  const handleClick = async (e) => {
+  const { id, getfilepath, seqTrimOutputFilePath } = sequence;
+  console.log(`this the sequence: ${sequence}`);
+  console.log(`this the sequence's id: ${id}`);
+  console.log(`The getfilepath is: ${getfilepath}`);
+  console.log(`The seqTrimOutputFilePath is: ${seqTrimOutputFilePath}`);
+
+  const eventHandlerClicktoTrim = async (e) => {
     e.preventDefault();
     const seqTrimTimeStamp = getDateTime();
 
+    console.log(`inside eventHandler "ClicktoTrim"`);
+    console.log(`The id is: ${id}`);
+    console.log(`The getfilepath is: ${getfilepath}`);
+    console.log(`The seqTrimOutputFilePath is: ${seqTrimOutputFilePath}`);
+    
     const requestBody = new FormData();
-    requestBody.append('id', sequence.id);
-    requestBody.append('inputFilePath', `public/data/${sequence.fileName}.${sequence.fileExtension}`);
-    requestBody.append('outputFileTrimPath', sequence.getoutputfilepath);
-
-    const someFormData = {
-      'id': sequence.id,
-      'seqTrimTimeStamp': seqTrimTimeStamp,
-      'seqTrimOutputFilePath': sequence.getoutputfilepath,
-    }
+    requestBody.append('id', id);
+    requestBody.append('getfilepath', getfilepath);
+    requestBody.append('seqTrimOutputFilePath', seqTrimOutputFilePath);
 
     await fetch('http://localhost:5000/runSeqTrim', {
       method: 'POST',
@@ -44,6 +47,11 @@ export default function Sequence({sequence}) {
       console.log(`Response Status: ${response.status}`)
       console.log(`Response Text: ${response.text()}`)
     }).then(() => {
+      const someFormData = {
+        'id': id,
+        'seqTrim': "oh hi, I'm GATACA",
+        'seqTrimTimeStamp': seqTrimTimeStamp,
+      };
       dispatch(addSequenceTrim({someFormData: someFormData}));
     })
     
@@ -51,12 +59,9 @@ export default function Sequence({sequence}) {
 
   return (
     <div class="wrapper">
-    {/* <div className="topic-container" key={sequence.id}> */}
-    {/* <div className="text-content" key={sequence.id}> */}
-
-      <div> {sequence.seqTrimName}:{(sequence.seqTrimTimeStamp == null) ? "": sequence.seqTrimTimeStamp.toString()}</div>
+      <div> {sequence.seqTrimOutputFileName}:{(sequence.seqTrimTimeStamp == null) ? "": sequence.seqTrimTimeStamp.toString()}</div>
       <div> Illumina quality passes: {(sequence.illuminaPass == true) ? "True": "False"}</div>
-      <div class="GridItemWButton"> {(sequence.seqTrim == null) ? <button onClick={handleClick}>Run bbDuk Trim</button>: sequence.seqTrim.substring(0,50)} </div>
+      <div class="GridItemWButton"> {(sequence.seqTrim == null) ? <button onClick={eventHandlerClicktoTrim}>Run bbDuk Trim</button>: sequence.seqTrim.substring(0,50)} </div>
     </div>  
   );
 }

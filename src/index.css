@@ -236,6 +236,7 @@ li:not(:last-child) {
   background-color: #ffffff;
   border: 2px solid #b736ff;
   border-radius: 10px;
+  margin-bottom: 10px;
 }
 .wrapper > div {
   padding: 1em;

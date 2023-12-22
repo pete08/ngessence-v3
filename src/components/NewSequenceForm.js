@@ -129,17 +129,25 @@ function outputExtension(extension) {
 // }
 
 
-export default function NewSequenceForm() {
+export default function NewSequenceForm({count}) {
     const dispatch = useDispatch();
     const [fileName, setFileName] = useState("");
+    const [trimFileExt, setTrimFileExt] = useState("");
+    const [trimFileName, setTrimFileName] = useState("");
     // const [id, setId] = useState("");
     const seqsLoading = useSelector(isLoadingSequences);
 
     const handleChange = async (e) => {
-        let fileInputNameinter = e.target.value;
-        fileInputNameinter = fileInputNameinter.split('\\');
-        setFileName(fileInputNameinter[(fileInputNameinter.length-1)]);
+        let rawfilenameextpath = e.target.value;
+        let rawfilenameextsplit = rawfilenameextpath.split('\\');
+        let rawfilenameext = rawfilenameextsplit[(rawfilenameextsplit.length-1)];
+        let rawfilenameSplit = rawfilenameext.split('.');
+        setFileName(`${rawfilenameSplit[0]}-${count}.${rawfilenameSplit[rawfilenameSplit.length-1]}`);
+        setTrimFileName(`${rawfilenameSplit[0]}-${count}-trim`);
+        setTrimFileExt(outputExtension(rawfilenameSplit[rawfilenameSplit.length-1]));
+
     }
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         const uuid = uuidv4();
@@ -151,22 +159,24 @@ export default function NewSequenceForm() {
         // file.append('input-file', fileInput.files[0]);
         // const fileExtension = document.querySelector('input[name="file-extension"]:checked').value;
         // ^ "file extension from the DOM". This is no longer needed due to the state hook [fileName, setFileName] contianing neede info
-        let inputFileName = fileName.split('.');
-        let inputFileNameWithoutExt = inputFileName[0];
-        let inputFilefileExtension = inputFileName[(inputFileName.length-1)];
         
         // const name = fileInput.files[0].name;
         // const fileInputName = fileInput.files[0].name.split('\\');
         // setFileName(fileInputName[(fileInputName.length-1)]);
         
-        console.log(`this is id BEFORE setId(uuid): ${uuid}`)
+        
         console.log(`this is id AFTER setId(uuid): ${uuid}`)
         const timestamp = getDateTime();
 
-        const outputExt = outputExtension(inputFilefileExtension);
-        const filepath = `./src/data/int/${fileName}`;
-        const outputfilepath = `public/data/trim/${inputFileNameWithoutExt}-trim.${outputExt}`;
-        const getoutputfilepath = `data/${inputFileNameWithoutExt}-trim.${outputExt}`;
+        
+        const filepath = `./public/data/${fileName}`;
+        const getfilepath = `data/${fileName}`;
+
+        const seqTrimOutputFileName = `${trimFileName}.${trimFileExt}`;
+        console.log(`seqTrimOutputFileName: ${seqTrimOutputFileName}`);
+
+        const seqTrimOutputFilePath = `./public/data/int/${seqTrimOutputFileName}`;
+        const getSeqTrimOutputFilePath = `data/int/${seqTrimOutputFileName}`;
 
 
         //upload file to approripate directory in FrontEnd:
@@ -178,22 +188,23 @@ export default function NewSequenceForm() {
 
         const requestBody = new FormData();
         requestBody.append('input-file', file);
+        requestBody.append('getfilepath', getfilepath);
+        requestBody.append('filepath', filepath);
         
         // POST to /upload requires both "filepath" and "outputfilepath". neither correct values, see node server=copy console .log in terminal
-        requestBody.append('filepath', filepath);
+        // requestBody.append('id', uuid);
+        // requestBody.append('timestamp', timestamp);
         // requestBody.append('outputfilepath', outputfilepath);
 
-        requestBody.append('id', uuid);
-        requestBody.append('timestamp', timestamp);
 
         const someFormData = {
             'id': uuid,
             'fileName': fileName,
-            'fileExtension': inputFilefileExtension,
-            'outputExt': outputExt,
             'filepath': filepath,
-            'outputfilepath': outputfilepath,
-            'getoutputfilepath': getoutputfilepath,
+            'getfilepath': getfilepath,
+            'seqTrimOutputFileName': trimFileName,
+            'seqTrimOutputFilePath': seqTrimOutputFilePath,
+            'getSeqTrimOutputFilePath': getSeqTrimOutputFilePath,
             'timestamp': timestamp,
         }
 
@@ -220,7 +231,7 @@ export default function NewSequenceForm() {
 
     return (
         <section>
-            <h1>seq upload filename: {fileName}</h1>
+            <h1>file to upload: {fileName}</h1>
             <form onSubmit={handleSubmit}>
                 <h2 className="center">Create a new Sequence</h2><br/>
                 <div className="form-section">

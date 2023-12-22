@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 // import { Link } from "react-router-dom";
 // import ROUTES from "../../app/routes";
@@ -14,24 +14,26 @@ export default function Sequences() {
   const allSequences = useSelector(selectSequences);
   
   // useEffect(() => {
-  // }, [allSequences])
+  // }, [allSequences]);
+
+  let count = Object.keys(allSequences).length;
 
   const showSequenceDetails = (allSequences) => {
-    for (const sequence in allSequences) {
-      return <Sequence sequence={allSequences[sequence]} />;
-    }
+    return Object.keys(allSequences).map(sequence => (
+      <Sequence sequence={allSequences[sequence]} />
+    ));
   }
 
-  if (Object.keys(allSequences).length < 1) {
+  if (count < 1) {
     return (
       <section className="center">
         <h1>Sequences</h1>
-        <ul className="topics-list"> you've uploaded {Object.keys(allSequences).length} sequences.
+        <ul className="topics-list"> you've uploaded {count} sequences.
         <hr />
         </ul>
         <h2>Create New Sequence</h2>
         {/* NewSequenceForm adds to state.sequences.sequences, state action that calls state.sequecnes.sequences is selectSequences */}
-        <NewSequenceForm />
+        <NewSequenceForm count={count}/>
       </section>
     );
   }
@@ -39,10 +41,10 @@ export default function Sequences() {
   return (
     <section>
       <h1>Add Sequence</h1>
-      <NewSequenceForm />
+      <NewSequenceForm count={count} />
       <section className="center">
         <h2>Sequences:</h2>
-        <p>you've uploaded {Object.keys(allSequences).length} sequences in your session.</p>
+        <p>you've uploaded {count} sequences in your session.</p>
         {/* <div> className="topics-list"> you've uploaded {Object.keys(allSequences).length} sequences in your session. < /div> */}
         {/* <div className="article-content-container"> */}
         {/* <h3 className="article-title">  */}
