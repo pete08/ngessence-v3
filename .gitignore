@@ -32,4 +32,6 @@ server-01.js
 /src/api/bbtools*
 /src/api/bbtools/*
 /public/data/*
+/uploads/*
+/uploads/int/*
 *.fa*

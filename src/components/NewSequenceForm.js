@@ -25,9 +25,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import { addSequence, isLoadingSequences, selectSequences } from "../features/sequences/sequencesSlice-copy";
-// import { useNavigate } from "react-router-dom";
-// import ROUTES from "../app/routes";
+import { addSequence, isLoadingSequences, selectSequences } from "../features/sequences/sequencesSlice";
 
 const getDateTime = () => {
     let today = new Date();
@@ -71,73 +69,25 @@ function outputExtension(extension) {
     return outputExt;
 }
 
-// async function processNewSeqForm(formData) {
-//     try {
-//         const response = await fetch('http://localhost:5000/upload', {
-//             method: 'POST',
-//             body: formData
-//         })
-        
-//         return await response.json();
-//         // const contentType = response.headers.get('content-type');
-//         // console.log(`resonse.content-type is: ${contentType}`)
-//         // .then(response => {
-//         //     if (contentType == "application/json") {
-//         //         return await response.json();
-//         //     } else if (contentType == "text/plain") {
-//         //         return response.text();
-//         //     } else {
-//         //         return `unable to accomadate response contentType of:\n${contentType}`;
-//         //     }
-//         // })
-//         // .then(data => {
-//         //     // Now you can use the data as needed
-//         //     console.log('HTML content:', data);
-//         //     return data;
-//         // })
 
-//     } catch (error) {
-//         // Handle network errors or other exceptions
-//         if (error && error.message) {
-//             console.error('ErrorErrorErrorError:', error.message);
-//         } else {
-//             console.error('An unknown error occurred:', error);
-//         }
-//         return { error: error };
-//     }
-// };
-
-// // Function to fetch and process a static file
-// async function processoutputSeq(fileUrl) {
-//     try {
-//         const response = await fetch(fileUrl);
-
-//         if (!response.ok) {
-//             throw new Error(`Failed to fetch file: ${response.statusText}`);
-//         }
-
-//         const fileContent = await response.text();
-
-//         // Now you can use the file content in your function
-//         console.log(fileContent);
-
-//         // Add your processing logic here
-
-//     } catch (error) {
-//         console.error('Error:', error.message);
-//     }
-// }
-
-
-export default function NewSequenceForm({count}) {
+export default function NewSequenceForm() {
+    console.log(`1. NewSequenceForm: Before selectSequences`)
+    const allSequences = useSelector(selectSequences);
+    console.log(`2. NewSequenceForm: After selectSequences`)
+    console.log(`3. NewSequenceForm: Before Count selectSequences `)
+    let count = Object.keys(allSequences).length;
+    console.log(`4. NewSequenceForm: After Count selectSequences `)
     const dispatch = useDispatch();
+    console.log(`5. NewSequenceForm: Before setting up react useState fileName, trimFileExt, trimFileName`)
     const [fileName, setFileName] = useState("");
     const [trimFileExt, setTrimFileExt] = useState("");
     const [trimFileName, setTrimFileName] = useState("");
+    console.log(`6. NewSequenceForm: After setting up react useState fileName, trimFileExt, trimFileName`)
     // const [id, setId] = useState("");
-    const seqsLoading = useSelector(isLoadingSequences);
+    // const seqsLoading = useSelector(isLoadingSequences);
 
-    const handleChange = async (e) => {
+    const handleChange = (e) => {
+        // e.preventDefault();
         let rawfilenameextpath = e.target.value;
         let rawfilenameextsplit = rawfilenameextpath.split('\\');
         let rawfilenameext = rawfilenameextsplit[(rawfilenameextsplit.length-1)];
@@ -156,76 +106,65 @@ export default function NewSequenceForm({count}) {
         const fileInput = document.getElementById('input-file');
         // const file = new FormData();
         const file = fileInput.files[0];
-        // file.append('input-file', fileInput.files[0]);
-        // const fileExtension = document.querySelector('input[name="file-extension"]:checked').value;
-        // ^ "file extension from the DOM". This is no longer needed due to the state hook [fileName, setFileName] contianing neede info
-        
-        // const name = fileInput.files[0].name;
-        // const fileInputName = fileInput.files[0].name.split('\\');
-        // setFileName(fileInputName[(fileInputName.length-1)]);
-        
-        
-        console.log(`this is id AFTER setId(uuid): ${uuid}`)
+
+                
+        console.log(`1. NewSequenceForm handleSubmit: id AFTER setId(uuid): ${uuid}`)
         const timestamp = getDateTime();
 
         
-        const filepath = `./public/data/${fileName}`;
-        const getfilepath = `data/${fileName}`;
+        const filepath = `./uploads/${fileName}`;
+        const getfilepath = `uploads/${fileName}`;
+        // const getfilepath = `data/${fileName}`;
 
         const seqTrimOutputFileName = `${trimFileName}.${trimFileExt}`;
-        console.log(`seqTrimOutputFileName: ${seqTrimOutputFileName}`);
-
-        const seqTrimOutputFilePath = `./public/data/int/${seqTrimOutputFileName}`;
-        const getSeqTrimOutputFilePath = `data/int/${seqTrimOutputFileName}`;
-
-
-        //upload file to approripate directory in FrontEnd:
-        // let file = fileInput.files[0];
-        // const fileContent = file.buffer;
-        // fs.writeFileSync(filepath, fileContent);
-
-        // TRIGGERS NODE.JS SERVER 5000 POST /UPLOAD (BASH SCRIPT TO PROCESS FILE UPLOADED) &&& ADD TO STATE.SEQUENCE()
+        console.log(`2. NewSequenceForm handleSubmit: after setting FileName before outputFilePath: ${seqTrimOutputFileName}`);
+        
+        const seqTrimOutputFilePath = `./uploads/int/${seqTrimOutputFileName}`;
+        const getSeqTrimOutputFilePath = `uploads/int/${seqTrimOutputFileName}`;
+        console.log(`3. NewSequenceForm handleSubmit: after setting FileName after outputFilePath : ${getSeqTrimOutputFilePath}`);
+                
 
         const requestBody = new FormData();
         requestBody.append('input-file', file);
         requestBody.append('getfilepath', getfilepath);
         requestBody.append('filepath', filepath);
-        
-        // POST to /upload requires both "filepath" and "outputfilepath". neither correct values, see node server=copy console .log in terminal
-        // requestBody.append('id', uuid);
-        // requestBody.append('timestamp', timestamp);
-        // requestBody.append('outputfilepath', outputfilepath);
+        console.log(`4. NewSequenceForm handleSubmit: after creating requestBody, before clearing form's State`);
 
+        setFileName("");
+        setTrimFileName("");
+        setTrimFileExt("");
+        document.forms[0].reset();
+        console.log(`5. NewSequenceForm handleSubmit: after creating requestBody, after clearing form's State after resetting form`);
 
         const someFormData = {
             'id': uuid,
             'fileName': fileName,
             'filepath': filepath,
             'getfilepath': getfilepath,
-            'seqTrimOutputFileName': trimFileName,
+            'trimFileName': trimFileName,
+            'trimFileExt': trimFileExt,
+            'seqTrimOutputFileName': seqTrimOutputFileName,
             'seqTrimOutputFilePath': seqTrimOutputFilePath,
             'getSeqTrimOutputFilePath': getSeqTrimOutputFilePath,
             'timestamp': timestamp,
-        }
+        };
 
-        console.log(`This console.log is BEFORE dispatch(addSequence({formData: someFormData}, the someFormData is:\n${JSON.stringify(someFormData)}`)
+        console.log(`6. NewSequenceForm handleSubmit: \nafter setting slice input data:\n${JSON.stringify(someFormData)} \n\n 6. before addSequence`);
         dispatch(addSequence({formData: someFormData}));
-        console.log(`This console.log BEFORE fetch(/upload), the someFormData is:\n${JSON.stringify(someFormData)}`)
-        try {fetch('http://localhost:5000/upload', {
-            method: 'POST',
-            body: requestBody
-        })
-        // .then((response) => {
-        //     console.log(`Response Status: ${response.status}`)
-        //     console.log(`Response Text: ${response.text()}`)
-        // })
-        // .then(() => {
-        //     console.log(`dispatch addSequence() containing  someFormData text: ${someFormData.text()}`)
-        //     dispatch(addSequence({formData: someFormData}));
-        // })        
+
+        console.log(`7. NewSequenceForm handleSubmit: after addSequence, before try{fetch}/catch() stmt`);
+        try {
+            const response = await fetch('http://localhost:5000/upload', {
+                method: 'POST',
+                body: requestBody
+            });
+            console.log(`8. NewSequenceForm handleSubmit: within try{fetch}/catch(), after fetch`);
+            if (!response.ok) {
+                const errorMessage = response;
+                throw new Error(`HTTP Error! Status: ${response.status} Message: ${errorMessage}`);
+            }
         } catch (error) {
-            // Handle any errors that might occur during processNewSeqForm
-            console.error('Error in handleSubmit:', error);
+            console.error(`NewSequenceForm handleSubmit: catch Error -> : ${error}`);
         }
     };
 
@@ -233,17 +172,17 @@ export default function NewSequenceForm({count}) {
         <section>
             <h1>file to upload: {fileName}</h1>
             <form onSubmit={handleSubmit}>
-                <h2 className="center">Create a new Sequence</h2><br/>
+                {/* <h2 className="center">Create a new Sequence</h2><br/> */}
                 <div className="form-section">
                     
-                    <label for="input-file">Upload:</label>
+                    <label htmlFor="input-file">Upload new Sequence:</label>
                     <input onChange={handleChange} type="file" id="input-file" name="input-file" accept="text/plain;charset=US-ASCII, text/plain;charset=UTF-8, .fasta, .fastq, .txt" />
-                    <input type="radio" id="fasta" name="file-extension" value="fasta" />
-                    <label for="fasta">fasta</label>
+                    {/* <input type="radio" id="fasta" name="file-extension" value="fasta" />
+                    <label htmlFor="fasta">fasta</label>
                     <input type="radio" id="fastq" name="file-extension" value="fastq" />
-                    <label for="fastq">fastq</label>
+                    <label htmlFor="fastq">fastq</label> */}
                 </div>
-                <button className="center" type="submit" disabled={seqsLoading}>Upload Sequence</button>
+                {(fileName !== "") ? <button className="center" type="submit">Upload Sequence</button>: <></>}
             </form>
         </section>
     );

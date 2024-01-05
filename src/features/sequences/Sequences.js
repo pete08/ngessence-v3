@@ -1,53 +1,59 @@
 import React from "react";
-import { useSelector } from "react-redux"
-import { Link } from "react-router-dom";
-import ROUTES from "../../app/routes";
-// import selector
-import { selectSequences } from "./sequencesSlice"
+import { useSelector, useDispatch } from "react-redux";
+import Sequence from "./Sequence";
+import { selectSequences, clearSequences } from "./sequencesSlice";
+import NewSequenceForm from "../../components/NewSequenceForm";
+
 
 export default function Sequences() {
-  const sequences = useSelector(selectSequences);
+  const dispatch = useDispatch();
+  console.log(`1. Sequences: Before selectSequences`);
+  const allSequences = useSelector(selectSequences);
+  console.log(`2. Sequences: After selectSequences`);
+  
+  console.log(`3. Sequences: Before Count selectSequences `);
+  let count = Object.keys(allSequences).length;
+  console.log(`4. Sequences: After Count selectSequences `);
+  
+  console.log(`5. Sequences: Before showSequenceDetails function `);
+  const showSequenceDetails = (allSequences) => {
+    return Object.keys(allSequences).map(sequence => (
+      <Sequence key={allSequences[sequence].id} sequence={allSequences[sequence]} />
+      ));
+    }
+  console.log(`6. Sequences: After showSequenceDetails function `);
 
-  if (sequences.length < 0) {
+
+  const handleClearState = () => {
+    dispatch(clearSequences());
+  }
+
+
+  if (count < 1) {
     return (
       <section className="center">
         <h1>Sequences</h1>
-        <ul className="sequences-list">...None
-        </ul>
-        <Link
-          to={ROUTES.newSequenceRoute()}
-          className="button create-new-topic-button"
-        >
-          Create New Sequence
-        </Link>
+        <h2 className="topics-list"> you've uploaded {count} sequences.
+        <hr />
+        </h2>
+        <h2>Create New Sequence</h2>
+        <NewSequenceForm />
       </section>
     );
   }
+
   return (
-    <section className="center">
-      <h1>Sequences</h1>
-      <ul className="topics-list">
-        {Object.values(sequences).map((sequence) => (
-          <li className="topic" key={sequence.id}>
-          <Link to={ROUTES.sequenceRoute(sequence.id)} className="topic-link">
-           <div className="topic-container">
-             {/* <img src={sequence.icon} alt="" /> */}
-             <div className="text-content" key={sequence.id}>
-               <h2>{sequence.name}</h2>
-               <h3>Illumina quality passes: {sequence.illuminaPass ? "True": "False"}</h3>
-               <p>SequenceResults:{(sequence.sequenceResult) ? sequence.sequenceResult.substring(0,50): " Null"} </p>
-             </div>
-           </div>
-         </Link>
-          </li>
-        ))}
-      </ul>
-      <Link
-        to={ROUTES.newSequenceRoute()}
-        className="button create-new-topic-button"
-      >
-        Create New Sequence
-      </Link>
+    <section>
+      <h1>Add Sequence</h1>
+      <section className="center">
+        <h2>Sequences:</h2>
+        <p>you've uploaded {count} sequences in your session.</p>
+        <div className="btnDiv">
+        <button id="clearStateBtn" onClick={handleClearState} value="clearState">Clear list</button>
+      </div>
+        <hr/>
+      </section>
+      {showSequenceDetails(allSequences)}
     </section>
   );
 }

@@ -8,21 +8,21 @@ export default function AppLayout() {
         <div>
             <nav>
                 <ul>
-                <li>
+                {/* <li>
                     <NavLink to={ROUTES.topicsRoute()} >
                     Topics
                     </NavLink>
-                </li>
-                <li>
+                </li> */}
+                {/* <li>
                     <NavLink to={ROUTES.quizzesRoute()} >
                     Quizzes
                     </NavLink>
-                </li>
-                <li>
+                </li> */}
+                {/* <li>
                     <NavLink to={ROUTES.newQuizRoute()} >
                     New Quiz
                     </NavLink>
-                </li>
+                </li> */}
                 <li>
                     <NavLink to={ROUTES.sequencesRoute()} >
                     Sequences
@@ -33,16 +33,14 @@ export default function AppLayout() {
                     New Sequence
                     </NavLink>
                 </li>
-                <li>
+                {/* <li>
                     <NavLink to={ROUTES.scriptRunner()} >
                     Script Runner
                     </NavLink>
-                </li>
+                </li> */}
                 </ul>
             </nav>
             <Outlet/>
         </div>
-      
-
     );
 }
