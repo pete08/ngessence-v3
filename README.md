@@ -1,5 +1,5 @@
 ## Project Overview
-This is part of Codecademy's JS FullStack path covering React Redux Store State. 
+create a unique React Web App using knowledge/notes gained from Codecademy's JS FullStack path (inc. Redux Store State).
 
 This is the NGEssence app. Its goal is to allow users access to Topic related Flash Cards. After a user creates a Topic, the user creates Quizzes within each Topic. Each Quiz is completed through creation Flash Cards. Each Flash Card consists of both a *Front* and *Back*.
 
