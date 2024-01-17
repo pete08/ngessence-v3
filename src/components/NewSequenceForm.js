@@ -106,7 +106,7 @@ export default function NewSequenceForm() {
         // 1. create useState below trimFileName: 
             // const [seqIdInitDigits, setSeqIdInitDigits] = useState("");
         // 2. in HandleChange() setSeqIdInitDigits to first 4 digits of uuiv4()
-        // 2. removed uuid from handleSubmit()
+        // 2. removed uuid from handleSubmit() and use setSeqIdInitDigits using uuid in handlChange();
         // 3. use seqIdInitDigits to create FileName
         // 4. this unique file name ensures:
         //4a. No errouneous dupes for redux slice stored state if user uploads same file accidently 
