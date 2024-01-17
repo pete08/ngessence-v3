@@ -1,5 +1,5 @@
 ## Project Overview
-This is part of Codecademy's JS FullStack path covering React Redux Store State. 
+My goal: Create a unique React Web App using knowledge/notes gained from Codecademy's JS FullStack path (inc. Redux Store State). Meanwhile this provides experiences navigating [MDN-Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript), [Stack Overflow](https://stackoverflow.com/), and practice using [OpenAI's Chat GPT](https://openai.com/blog/chatgpt) to assist in troubleshooting.
 
 This is the NGEssence app. Its goal is to allow users access to Topic related Flash Cards. After a user creates a Topic, the user creates Quizzes within each Topic. Each Quiz is completed through creation Flash Cards. Each Flash Card consists of both a *Front* and *Back*.
 
