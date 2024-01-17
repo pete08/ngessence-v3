@@ -100,8 +100,18 @@ export default function NewSequenceForm() {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // 01-12-2024: move uuid from handleSubmit to handlChange for easier file mgmt
         const uuid = uuidv4();
-        // setId(uuid);
+        // 1. create useState below trimFileName: 
+            // const [seqIdInitDigits, setSeqIdInitDigits] = useState("");
+        // 2. in HandleChange() setSeqIdInitDigits to first 4 digits of uuiv4()
+        // 2. removed uuid from handleSubmit()
+        // 3. use seqIdInitDigits to create FileName
+        // 4. this unique file name ensures:
+        //4a. No errouneous dupes for redux slice stored state if user uploads same file accidently 
+        //4b-i. programmed file removal: Timed via timed function cleanupFiles() 
+        //4b-ii. user triggered file removal: /sequnces eventHandler() within Redux State.sequences list
 
         const fileInput = document.getElementById('input-file');
         // const file = new FormData();

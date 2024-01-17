@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { addSequenceTrim } from "./sequencesSlice"
+import { addSequenceTrim, clearSequence } from "./sequencesSlice";
 
 const getDateTime = () => {
   let today = new Date();
@@ -20,10 +20,6 @@ export default function Sequence({sequence}) {
   const { id, getfilepath, trimFileName, trimFileExt, seqTrimOutputFilePath, seqTrimOutputFileName } = sequence;
   // console.log(`sequence from Sequence-copy : ${sequence}`);
   console.log(`1. Sequence export function: id of {sequence} called: ${id} `);
-  // console.log(`sequence's getfilepath from Sequence-copy: ${getfilepath}`);
-  // console.log(`sequence's seqTrimOutputFilePath from Sequence-copy: ${seqTrimOutputFilePath}`);
-  // const isSeqLoading = useSelector(isLoadingSequences);
-  // console.log(`sequence's isLoadingSequences (True when bbDuk Button clicked): ${isSeqLoading}`);
 
   const addSeqTrim = (id, seqTrimTimeStamp) => {
     console.log(`addSeqTrim args are:\nid: ${id}\nseqTrimTimeStamp: ${seqTrimTimeStamp}`)
@@ -35,7 +31,7 @@ export default function Sequence({sequence}) {
     dispatch(addSequenceTrim({someData: someData}));
   }
 
-//2024-01-04 : START HERE , see when eventHandlers is triggered using run BBDuk Trim: clicktoTrim() if the values in redux state are apprapopriately added... so far the error stems form sequncesSlice error; "someData is undefined"
+  
   const clicktoTrim = async (e) => {
     e.preventDefault();
     console.log("1. clicktoTrim: Inside");
@@ -72,8 +68,6 @@ export default function Sequence({sequence}) {
       }
       console.log(`9. clicktoTrim: After fetch Before catch(), seqTrimOutputFileName: ${seqTrimOutputFileName}`);
 
-
-
     } catch (error) {
       console.error(`#.ERROR clicktoTrim: - /runSeqTrim: ${error}`);
     }
@@ -82,47 +76,9 @@ export default function Sequence({sequence}) {
 
   };
 
-  // const eventHandlerClicktoDownload = async (e) => {
-  //   e.preventDefault();
-    
-  //   const requestBody = new FormData();
-  //   requestBody.append('seqTrimOutputFileName', seqTrimOutputFileName);
-
-  //   await fetch('http://localhost:5000/dnldSeqTrim', {
-  //     method: 'GET',
-  //     body: requestBody, // If this is succcessful in downloading ...-trim.fa, then attempt to send "fileName.fa" through header instead of body
-  //     headers: {
-  //       "Content-Type": "text/plain",
-  //       "Content-Disposition": `attachment; filename=${seqTrimOutputFileName}`
-  //     }       
-  //   })
-  //   .then((response) => response.blob())
-  //   .then((blob) => {
-  //     // Create blob link to download
-  //     const url = window.URL.createObjectURL(blob);
-  //     const link = document.createElement('a');
-  //     link.href = url;
-  //     link.setAttribute('download', `${seqTrimOutputFileName}`); // Specify the filename
-
-  //     // Append to the HTML link element on the page
-  //     document.body.appendChild(link);
-
-  //     // Start the download
-  //     link.click();
-
-  //     // Clean up and remove the link
-  //     document.body.removeChild(link);
-  //   });
-  // };
-
   const clicktoDnldTxtFile = async (e) => {
     e.preventDefault();
     
-    console.log(`1. clicktoDnldTxtFile: before requestBody`);
-    
-    // const requestBody = new FormData();
-    // requestBody.append('id', id);
-    // requestBody.append('seqTrimOutputFilePath', seqTrimOutputFilePath);
     console.log(`2. clicktoDnldTxtFile: after requestBody\n id: ${id}\n seqTrimOutputFilePath: ${seqTrimOutputFilePath}\n seqTrimOutputFileName: ${seqTrimOutputFileName}`);
     
     // obtain file (file blob) from backend node.js
@@ -146,11 +102,6 @@ export default function Sequence({sequence}) {
       console.log(`5. clicktoDnldTxtFile: before fileBlob`);
       const fileBlob = await response.blob();
       console.log(`6. clicktoDnldTxtFile: after fileBlob`);
-      
-      // console.log("1. clicktoDnldTxtFile: before create Data obj");
-      // const datatxts = ["here", "and", "now"];
-      // console.log("2. clicktoDnldTxtFile: before create Blob file, after create Data obj");
-      // const file = new Blob(datatxts, {type: 'text/plain'});
       
       
       console.log(`7. clicktoDnldTxtFile: before create document.createElement("a").URL.createObjectURL(fileBlob)`);
@@ -176,6 +127,13 @@ export default function Sequence({sequence}) {
     }
     console.log(`13. clicktoDnldTxtFile: Outside, After try{fetch}/catch`);
   };
+
+  const clicktoRemoveSeq = (e) => {
+    console.log(`1. clicktoRemoveSeq: before dispatch(clearSequence()`);
+    dispatch(clearSequence(sequence));
+    console.log(`2. clicktoRemoveSeq: after dispatch(clearSequence()`);
+  }
+
 //2024-01-04:START HERE , 
 // [1]. within sequence div container only show bbduk Trim button and nothing else.
 //    If sequence.seqTrim == null, then only show
@@ -184,10 +142,18 @@ export default function Sequence({sequence}) {
 
   return (
     <div className="wrapper">
-      <div> {sequence.seqTrimOutputFileName}:{(sequence.seqTrimTimeStamp == null) ? "": `   ${sequence.seqTrimTimeStamp}`}</div>
-      <div> Illumina quality: {sequence.illuminaPass}</div>
-      
-      <div className="GridItemWButton"> {(sequence.seqTrim == null) ? <button onClick={clicktoTrim}>Run bbDuk Trim</button>: <button id="downloadBtn" onClick={clicktoDnldTxtFile} value="download">Download</button>} </div>
+      <div>
+        {sequence.seqTrimOutputFileName}:{(sequence.seqTrimTimeStamp == null) ? "": `   ${sequence.seqTrimTimeStamp}`}
+      </div>
+      <div>
+        Illumina quality: {sequence.illuminaPass}
+      </div>
+      <div className="GridItemWButton">
+        {(sequence.seqTrim == null) ? <button onClick={clicktoTrim}>Run bbDuk Trim</button>: <button id="downloadBtn" onClick={clicktoDnldTxtFile} value="download">Download</button>} 
+      </div>
+      <div className="GridItemWButtonRemove"> 
+        {<button id="removeSeq" onClick={clicktoRemoveSeq} value="removeSeq">Remove</button>}
+      </div>
       {/* <div className="GridItemWButton">
         <button onClick={clicktoTrim}>Run bbDuk Trim</button>
       </div> */}
@@ -197,5 +163,4 @@ export default function Sequence({sequence}) {
     </div>  
   );
 }
-
 

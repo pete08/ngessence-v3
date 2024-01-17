@@ -5,9 +5,9 @@ const multer = require("multer");
 const { exec } = require("child_process");
 const favicon = require("serve-favicon");
 const path = require("path");
-const cors = require("cors");
 // filesystem module
 const fs = require('fs');
+const cors = require("cors");
 const { Server } = require("http");
 // for general front-end server built on Express.js
 const app = express();
@@ -45,39 +45,6 @@ app.post("/upload", upload.single("input-file"), (req, res) => {
   res.json({ result: `successfully uploaded: ${filepath}`});
 });
 
-// app.post("/runSeqTrim", upload.none(), async (req, res) => {
-//   res.setHeader("Access-Control-Allow-Origin", "*");
-//   res.setHeader("Access-Control-Allow-Methods", "POST");
-//   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-    
-//   const { id, getfilepath, seqTrimOutputFilePath } = req.body;
-//   try {
-//     // ... other code
-    
-//     // Enqueue the file processing task asynchronously
-//     await processFileAsync(id, getfilepath, seqTrimOutputFilePath);
-
-//     // Respond immediately to the client
-//     res.json({ message: 'File processing started. Check for completion.' });
-//   } catch (error) {
-//     console.error(`Error: ${error}`);
-//     res.status(500).json({ error: 'Internal Server Error' });
-//   }
-// });
-
-// async function processFileAsync(id, getfilepath, seqTrimOutputFilePath) {
-//   return new Promise((resolve, reject) => {
-//     exec(`sh ${path.join(__dirname, 'src', 'api', 'sequencescript.sh')} ${path.join(__dirname, getfilepath)} ${path.join(__dirname, seqTrimOutputFilePath)}`, (error, stdout, stderr) => {
-//       if (error) {
-//         console.error(`Error executing the script: ${error}`);
-//         reject(error);
-//       } else {
-//         console.log(`this is the stdout: ${stdout}`);
-//         resolve();
-//       }
-//     });
-//   });
-// }
 
 app.post("/runSeqTrim", upload.none(), (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -128,6 +95,70 @@ app.get("/dnldSeqTrim", (req, res) => {
   console.log(`6. /dnldSeqTrim: After res.sendFile(filePath)`);
   
 });
+
+// Function to clean up files in the uploads directory older than a certain time
+function cleanupFiles() {
+  //  01-15-2024
+  //  START HERE: 
+  //    1. cleanupFiles fails to remove files in ./uploads/int and errors with following:
+  //      Error deleting file int: [Error: EPERM: operation not permitted, unlink '/Users/peter/Desktop/Programming/ngessence-v3/uploads/int'] {
+  //        errno: -1,
+  //        code: 'EPERM',
+  //        syscall: 'unlink',
+  //        path: '/Users/peter/Desktop/Programming/ngessence-v3/uploads/int'
+  //      }
+  //  Possible solutions:
+  //    1. incorporate recursion within uploadDir: uploadDir = path.join(__dirname, 'uploads'))
+  //    2. add new fs.readdir() to indicate additional folder -> fs.readdir(./uploads/int, (err, files))
+  console.log(`\ncleanupFiles: before uploadDir path.join`)
+  const uploadDir = path.join(__dirname, 'uploads');
+  console.log(`\ncleanupFiles: after uploadDir path.join`)
+  console.log(`\ncleanupFiles: path.join is:`)
+
+  const cleanupFilesRecursive = (cleanThisDir) => {
+    fs.readdir(cleanThisDir, (err, files) => {
+      if (err) {
+        console.error('Error reading upload directory:', err);
+        return;
+      }
+
+      const currentTime = Date.now();
+
+      files.forEach((file) => {
+        const filePath = path.join(cleanThisDir, file);
+        console.log(`\ncleanupFiles: files.forEach((file); current file is: ... ${filePath} ...`);
+        fs.stat(filePath, (statErr, stats) => {
+          if (statErr) {
+            console.error(`Error checking file stats for ${file}:`, statErr);
+            return;
+          }
+          if (stats.isDirectory()) {
+            cleanupFilesRecursive(filePath);
+          } else {
+            // Adjust threshold time
+            const thresholdTime = currentTime - 2 * 60 * 1000; // 2 min
+
+            if (stats.birthtime.getTime() < thresholdTime) {
+              // Delete files older than the threshold time
+              fs.unlink(filePath, (unlinkErr) => {
+                if (unlinkErr) {
+                  console.error(`Error deleting file ${file}:`, unlinkErr);
+                } else {
+                  console.log(`File ${file} deleted.`);
+                }
+              });
+            }
+          }
+        });
+      });
+    });
+  }
+  cleanupFilesRecursive(uploadDir);
+}
+
+// Schedule the cleanup function to reflect thresholdTime 
+setInterval(cleanupFiles, 2 * 60 * 1000); // Run every 2 min
+
 
 
 // server listening for requests to port 5000

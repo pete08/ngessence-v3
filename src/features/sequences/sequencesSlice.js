@@ -55,6 +55,10 @@ const sequencesSlice = createSlice({
       clearSequences: (state) => {
         state.sequences = {};
       },
+      clearSequence: (state, action) => {
+        // console.log(`1a. clearSequence: action.payload is: ${JSON.stringify(action.payload)}`);
+        delete state.sequences[action.payload.id]
+      },
     },
     extraReducers: (builder) => {
         builder
@@ -99,7 +103,7 @@ const sequencesSlice = createSlice({
 // selector of state sequences
 export const selectSequences = (state) => state.sequences.sequences;
 //export actions
-export const {clearSequences} = sequencesSlice.actions;
+export const {clearSequences, clearSequence} = sequencesSlice.actions;
 //export the Thunk actions
 export const isLoadingSequences = (state) => state.sequences.isLoadingSequences;
 
