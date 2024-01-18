@@ -1,9 +1,16 @@
 ## Project Overview
-My goal: Create a unique React Web App using knowledge/notes gained from Codecademy's JS FullStack path (inc. Redux Store State). Meanwhile this provides experiences navigating [MDN-Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript), [Stack Overflow](https://stackoverflow.com/), and practice using [OpenAI's Chat GPT](https://openai.com/blog/chatgpt) to assist in troubleshooting.
 
-This is the NGEssence app. Its goal is to allow users access to Topic related Flash Cards. After a user creates a Topic, the user creates Quizzes within each Topic. Each Quiz is completed through creation Flash Cards. Each Flash Card consists of both a *Front* and *Back*.
 
-End user can then access Quizzes either through the population of Quizzes or through each Topic.
+**App Purpose**:
+This is the NGEssence app. Its goal is to allow users access to [BBTool's](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/) BBDuk processing capabilities. BBDuk processes sequencing files (.fasta, .fastq, etc) for preparation for subsequent biogenetic analysis. After user uploads sequencing file, user may run BBDuk against file creating a new output file. End user can then download sequencing output file (.fa, .fq).
+
+This allows users freedom to run [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/) outside of normal dependencies such as new computer or on a mobile device and email it themselves.
+
+
+**My Goal**: Create a unique React Web App using knowledge/notes gained from Codecademy's JS FullStack path (inc. Redux Store State). Meanwhile this provides experiences navigating [MDN-Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript), [Stack Overflow](https://stackoverflow.com/), and practice using [OpenAI's Chat GPT](https://openai.com/blog/chatgpt) to assist in troubleshooting.
+
+
+
 
 # Getting Started with Create React App
 
