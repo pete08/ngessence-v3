@@ -1,17 +1,19 @@
 * {
   font-family: "Open Sans", sans-serif;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 }
 
-html,
+/* html,
 body {
   margin: 0;
-}
+} */
 
 nav {
-  background: #b736ff;
+  background: #609A3E;
   display: flex;
   padding: 24px 36px;
+  
+  border-radius: 5px;
 }
 
 nav ul {
@@ -47,18 +49,41 @@ nav a.active {
   font-weight: bold;
 }
 
-h1 {
-  font-weight: bold;
-  font-size: 20px;
-  color: #000000;
-  margin: 0;
+div.welcomeContent {
+  display: inline-block;
+  width: 99%;
+  /* height: 50px; */
+  margin: 0px auto;
+  font-size: 30px;
+  color: #609A3E;
+
+  text-align: center;
+  padding: 10px 0px;
+  /* border: 5px double #609A3E; */
 }
 
 h2 {
   font-weight: bold;
   font-size: 16px;
   color: #000000;
+  margin: 0px;
+}
+
+.aboutContent h2, .aboutContent h3, .aboutContent h4, .aboutContent h5 {
+  clear: none;
+  color: #609a3e;
   margin: 0;
+  text-align: left;
+}
+
+p {
+  margin: 0.25rem 0 1.25rem;
+  text-align: left;
+}
+
+p div.cmdBashScript {
+  font-style: italic;
+  margin-left: 50px;
 }
 
 button,
@@ -93,7 +118,7 @@ select {
   padding: 8px 10px;
   width: 100%;
   margin-bottom: 6px;
-  text-align: left;
+  /* text-align: left; */
 }
 
 select:invalid,
@@ -114,11 +139,11 @@ input::placeholder {
   text-align: center;
 }
 
-section > h1 {
+/* section > h1 {
   margin: 0;
   margin-bottom: 20px;
   text-align: center;
-}
+} */
 
 .actions-container {
   padding-top: 16px;
@@ -264,4 +289,19 @@ li:not(:last-child) {
   margin: 0px 10px;
   text-decoration: none;
   cursor: pointer;
+}
+
+div.ngessence-footer__nav {
+
+  background: #ffffff;
+  display: flex;
+  padding: 0px auto;
+  border: 2px solid #609A3E;
+  border-radius: 5px;
+
+  /* padding: 5px 26px; */
+}
+
+div.ngessence-footer__nav_list > li {
+  display: inline-block;
 }

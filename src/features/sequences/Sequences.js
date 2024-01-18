@@ -23,11 +23,9 @@ export default function Sequences() {
     }
   console.log(`6. Sequences: After showSequenceDetails function `);
 
-
   const handleClearState = () => {
     dispatch(clearSequences());
   }
-
 
   if (count < 1) {
     return (

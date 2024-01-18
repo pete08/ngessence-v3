@@ -15,6 +15,7 @@ import NewSequenceForm from "../components/NewSequenceForm"
 // import Quizzes from "../features/quizzes/Quizzes";
 import AppLayout from "./AppLayout";
 import Sequences from "../features/sequences/Sequences";
+import About from "../components/about/AboutIt";
 // import Sequence from "../features/sequences/Sequence";
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="sequences" element={<Sequences/>} />
         {/* <Route path="sequences/:sequenceId" element={<Sequence/>} /> */}
         <Route path="sequences/new" element={<NewSequenceForm/>} />
+        <Route path="about" element={<About/>} />
         {/* <Route path="sequences/scriptRunner" element={<ScriptRunner/>}/> */}
         {/* <Route path="topics" element={<Topics/>}/> */}
         {/* <Route path="topics/new" element={<NewTopicForm/>}/> */}

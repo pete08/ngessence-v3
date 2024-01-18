@@ -33,6 +33,11 @@ export default function AppLayout() {
                     New Sequence
                     </NavLink>
                 </li>
+                <li>
+                    <NavLink to={ROUTES.about()}>
+                        About
+                    </NavLink>
+                </li>
                 {/* <li>
                     <NavLink to={ROUTES.scriptRunner()} >
                     Script Runner
