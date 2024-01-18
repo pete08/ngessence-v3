@@ -6,27 +6,51 @@ import ROUTES from "./routes";
 export default function AppLayout() {
     return (
         <div>
-            <nav>
+
+            <div class="wrapper">
+                <div class="box">
+                <NavLink to={ROUTES.sequencesRoute()} >
+                    Sequences
+                </NavLink>
+                </div>
+                <div class="box">
+                    <NavLink to={ROUTES.newSequenceRoute()} >
+                New Sequence
+                </NavLink>
+                </div>
+                <div class="box">
+                    <NavLink to={ROUTES.about()}>
+                        About
+                    </NavLink>
+                </div>  
+            </div>
+            {/* <div class="box a">
+                <NavLink to={ROUTES.sequencesRoute()} >
+                    Sequences
+                </NavLink>
+            </div>
+            <div class="box b">
+                <NavLink to={ROUTES.newSequenceRoute()} >
+                    New Sequence
+                </NavLink>
+            </div>
+            <div class="box c">
+                <NavLink to={ROUTES.about()}>
+                    About
+                </NavLink>
+            </div>
+            <div class="box d">D</div>
+            </div>
+
+
+            <nav className="wrapper">
                 <ul>
-                {/* <li>
-                    <NavLink to={ROUTES.topicsRoute()} >
-                    Topics
-                    </NavLink>
-                </li> */}
-                {/* <li>
-                    <NavLink to={ROUTES.quizzesRoute()} >
-                    Quizzes
-                    </NavLink>
-                </li> */}
-                {/* <li>
-                    <NavLink to={ROUTES.newQuizRoute()} >
-                    New Quiz
-                    </NavLink>
-                </li> */}
                 <li>
+                <div className="box">
                     <NavLink to={ROUTES.sequencesRoute()} >
                     Sequences
                     </NavLink>
+                </div>
                 </li>
                 <li>
                     <NavLink to={ROUTES.newSequenceRoute()} >
@@ -38,13 +62,9 @@ export default function AppLayout() {
                         About
                     </NavLink>
                 </li>
-                {/* <li>
-                    <NavLink to={ROUTES.scriptRunner()} >
-                    Script Runner
-                    </NavLink>
-                </li> */}
+
                 </ul>
-            </nav>
+            </nav> */}
             <Outlet/>
         </div>
     );
