@@ -7,64 +7,47 @@ export default function AppLayout() {
     return (
         <div>
 
-            <div class="wrapper">
-                <div class="box">
+            <div className="wrapper">
                 <NavLink to={ROUTES.sequencesRoute()} >
+                    <div className="box-navigate">
                     Sequences
+                    </div>
                 </NavLink>
-                </div>
-                <div class="box">
-                    <NavLink to={ROUTES.newSequenceRoute()} >
-                New Sequence
-                </NavLink>
-                </div>
-                <div class="box">
-                    <NavLink to={ROUTES.about()}>
-                        About
-                    </NavLink>
-                </div>  
-            </div>
-            {/* <div class="box a">
-                <NavLink to={ROUTES.sequencesRoute()} >
-                    Sequences
-                </NavLink>
-            </div>
-            <div class="box b">
                 <NavLink to={ROUTES.newSequenceRoute()} >
+                    <div className="box-navigate">
                     New Sequence
+                    </div>
                 </NavLink>
-            </div>
-            <div class="box c">
                 <NavLink to={ROUTES.about()}>
+                    <div className="box-navigate">
                     About
+                    </div>  
                 </NavLink>
             </div>
-            <div class="box d">D</div>
-            </div>
-
-
-            <nav className="wrapper">
-                <ul>
-                <li>
-                <div className="box">
-                    <NavLink to={ROUTES.sequencesRoute()} >
-                    Sequences
-                    </NavLink>
+            <hr />
+            {/* <div className="container">
+                <div className="four columns header-nav">
+                <NavLink to={ROUTES.sequencesRoute()} >
+                    <div className="button">
+                        Sequences
+                    </div>
+                </NavLink>
                 </div>
-                </li>
-                <li>
-                    <NavLink to={ROUTES.newSequenceRoute()} >
-                    New Sequence
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink to={ROUTES.about()}>
+                <div className="four columns header-nav">
+                <NavLink to={ROUTES.newSequenceRoute()} >
+                    <div className="button">
+                        New Sequence
+                    </div>
+                </NavLink>
+                </div>
+                <div className="four columns header-nav">
+                <NavLink to={ROUTES.about()}>
+                    <div className="button">
                         About
-                    </NavLink>
-                </li>
-
-                </ul>
-            </nav> */}
+                    </div>  
+                </NavLink>
+                </div>
+            </div> */}
             <Outlet/>
         </div>
     );
