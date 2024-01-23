@@ -297,7 +297,7 @@ input[type="button"].button-primary:focus {
 
 /* Input Form Button
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-input::file-selector-button {
+input[type="file"]::file-selector-button {
   padding: 0 30px;
   color: #609a3e;
   text-align: center;
@@ -313,6 +313,21 @@ input::file-selector-button {
   border: 1px solid #609a3e;
   cursor: pointer;
   box-sizing: border-box; 
+}
+
+input[type="file"]::-ms-browse:hover {
+  background-color: #dfead8;
+  border: 1px solid #bbb;
+}
+
+input[type="file"]::-webkit-file-upload-button:hover {
+  background-color: #dfead8;
+  border: 1px solid #bbb;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background-color: #dfead8;
+  border: 1px solid #bbb;
 }
 
 /* Forms
