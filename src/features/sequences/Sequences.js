@@ -30,11 +30,12 @@ export default function Sequences() {
   if (count < 1) {
     return (
       <section className="center">
-        <h1>Sequences</h1>
-        <h2 className="topics-list"> you've uploaded {count} sequences.
+          <div class="row">
+            <div class="nine columns">Sequences </div>
+            <div class="three columns">you've uploaded {count} sequences.</div>
+          </div>
         <hr />
-        </h2>
-        <h2>Create New Sequence</h2>
+        <h3>Create New Sequence</h3>
         <NewSequenceForm />
       </section>
     );
@@ -42,14 +43,19 @@ export default function Sequences() {
 
   return (
     <section>
-      <h1>Add Sequence</h1>
       <section className="center">
-        <h2>Sequences:</h2>
-        <p>you've uploaded {count} sequences in your session.</p>
-        <div className="btnDiv">
+            <NewSequenceForm />
+          <hr />
+          <div class="row">
+            <h3 class="nine columns">Sequences:</h3>
+            {/* <div class="nine columns">Sequences </div> */}
+            {/* <h4 class="nine columns">Sequences:</h4> */}
+            <h6 class="three columns">you've uploaded <b>{count}</b> sequences.</h6>
+          </div>
+      <div className="btnDiv">
         <button id="clearStateBtn" onClick={handleClearState} value="clearState">Clear list</button>
       </div>
-        <hr/>
+        <hr className="sequences" />
       </section>
       {showSequenceDetails(allSequences)}
     </section>

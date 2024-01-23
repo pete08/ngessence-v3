@@ -1,8 +1,8 @@
 import React from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import ROUTES from "./routes";
-// import Header from "../../header";
-import Footer from "../components/footer/Footer";
+import Header from "../../header";
+import Footer from "../../footer";
 
 
 export default function AppLayout() {
@@ -25,7 +25,7 @@ export default function AppLayout() {
                     </div>  
                 </NavLink>
             </div>
-            <hr className="header"/>
+            <hr />
             {/* <div className="container">
                 <div className="four columns header-nav">
                 <NavLink to={ROUTES.sequencesRoute()} >
@@ -50,8 +50,6 @@ export default function AppLayout() {
                 </div>
             </div> */}
             <Outlet/>
-            <hr className="footer"/>
-            <Footer />
         </div>
     );
 }
