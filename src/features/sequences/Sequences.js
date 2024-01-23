@@ -35,7 +35,7 @@ export default function Sequences() {
             <div class="three columns">you've uploaded {count} sequences.</div>
           </div>
         <hr />
-        <h3>Create New Sequence</h3>
+        {/* <h3>Create New Sequence</h3> */}
         <NewSequenceForm />
       </section>
     );
@@ -46,18 +46,22 @@ export default function Sequences() {
       <section className="center">
             <NewSequenceForm />
           <hr />
-          <div class="row">
-            <h3 class="nine columns">Sequences:</h3>
-            {/* <div class="nine columns">Sequences </div> */}
-            {/* <h4 class="nine columns">Sequences:</h4> */}
-            <h6 class="three columns">you've uploaded <b>{count}</b> sequences.</h6>
+          <div className="row">
+            <h3 className="nine columns">Sequences: 
+            </h3>
+            {/* <div className="nine columns">Sequences </div> */}
+            {/* <h4 className="nine columns">Sequences:</h4> */}
+            <h6 className="three columns">you've uploaded <b>{count}</b> sequences.</h6>
           </div>
       <div className="btnDiv">
-        <button id="clearStateBtn" onClick={handleClearState} value="clearState">Clear list</button>
+        
       </div>
         <hr className="sequences" />
       </section>
       {showSequenceDetails(allSequences)}
+      <br/>
+      <br/>
+      <button id="clearStateBtn" onClick={handleClearState} value="clearState">Clear list</button>
     </section>
   );
 }

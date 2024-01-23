@@ -28,7 +28,7 @@ export default function Footer() {
     }, []);
     
     const iconList = [
-        {title: "Mail", url: `https://www.mail.google.com`, src: `Icon_Mail_DblHlx.png`},
+        {title: "Mail", url: `mailto:...@gmail.com?subject=NGEssence Feedback/Question&body=Please Send To: ngessence.email@gmail.com`, src: `Icon_Mail_DblHlx.png`},
         {title: "Twitter", url: `https://www.twitter.com/ngessence`, src: `Icon_Twitter_DblHlx.png`},
         {title: "Github", url: `https://www.github.com/ngessence`, src: `Icon_Github_DblHlx.png`},
         {title: "Linkedin", url: `https://www.linkedin.com/ngessence`, src: `Icon_Linkedin_DblHlx.png`},
@@ -41,7 +41,7 @@ export default function Footer() {
         const maxicons = (iconList.length-1);
         if (idx > maxicons) {
             return (
-                <a href={iconList[maxicons][`url`]} title={iconList[maxicons][`title`]}>
+                <a href={iconList[maxicons][`url`]} title={iconList[maxicons][`title`]} target="_blank" rel="noreferrer">
                     <img
                     key={maxicons}
                     alt={`repeat-${maxicons}`}
@@ -52,7 +52,7 @@ export default function Footer() {
             )
         } else {
             return (
-                <a href={iconList[idx][`url`]} title={iconList[idx][`title`]}>
+                <a href={iconList[idx][`url`]} title={iconList[idx][`title`]} target="_blank" rel="noreferrer">
                     <img
                     key={idx}
                     alt={`repeat-${idx}`}
@@ -81,12 +81,12 @@ export default function Footer() {
             <NavLink to={ROUTES.sequencesRoute()}>
                     Sequences    |
             </NavLink>
-            <a href="/aboutit" title="About">    Help</a>    |
-            <a href="/contact" title="Contact Us">    Contact Us</a>    |
-            <a href="/aboutit" title="Twitter">    Twitter</a>    |
-            <a href="/aboutit" title="Github">    Github</a>    |
-            <a href="/aboutit" title="Linkedin">    Linkedin</a>    |
-            <a href="/aboutit" title="FB">    FB</a>    |
+            <a href="/about" title="About">    Help</a>    |
+            <a href= "mailto:...@gmail.com?subject=NGEssence Feedback/Question&body=Please Send To: ngessence.email@gmail.com" title="Contact Us" target="_blank" rel="noreferrer">    Contact Us</a>    |
+            <a href="/about" title="Twitter" target="_blank" rel="noreferrer">    Twitter</a>    |
+            <a href="/about" title="Github" target="_blank" rel="noreferrer">    Github</a>    |
+            <a href="/about" title="Linkedin" target="_blank" rel="noreferrer">    Linkedin</a>    |
+            <a href="/about" title="FB" target="_blank" rel="noreferrer">    FB</a>    |
                 © 2024 www.NGEssence.com
             </span>
             {/* </div> */}

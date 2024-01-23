@@ -233,7 +233,7 @@ a:hover {
 } */
 
 
-/* Battons
+/* Buttons
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .button,
 button,
@@ -295,6 +295,26 @@ input[type="button"].button-primary:focus {
   border-color: #1EAEDB; }
 
 
+/* Input Form Button
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+input::file-selector-button {
+  padding: 0 30px;
+  color: #609a3e;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 2rem;
+  letter-spacing: .05rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border-radius: 4px;
+  border: 1px solid #609a3e;
+  cursor: pointer;
+  box-sizing: border-box; 
+}
+
 /* Forms
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 input[type="email"],
@@ -304,14 +324,12 @@ input[type="text"],
 input[type="tel"],
 input[type="url"],
 input[type="password"],
-input[type="file"],
 textarea,
 select {
   height: 38px;
   padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
   background-color: #fff;
-  border: 1px solid #609a3e;
-  /* border: 1px solid #D1D1D1; */
+  border: 1px solid #D1D1D1;
   border-radius: 4px;
   box-shadow: none;
   box-sizing: border-box; }
@@ -323,7 +341,6 @@ input[type="text"],
 input[type="tel"],
 input[type="url"],
 input[type="password"],
-input[type="file"],
 textarea {
   -webkit-appearance: none;
      -moz-appearance: none;
@@ -347,7 +364,7 @@ label,
 legend {
   display: block;
   margin-bottom: .5rem;
-  font-weight: 600; }
+  font-weight: 400; }
 fieldset {
   padding: 0;
   border-width: 0; }
@@ -450,7 +467,7 @@ form {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 hr.header  {
   margin-top: 1.5rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem;
   border-width: 0;
   border-top: 1px solid #E1E1E1; }
 hr.footer {
@@ -460,7 +477,7 @@ hr.footer {
   border-top: 1px solid #E1E1E1; }
 hr {
   margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 3rem;
   border-width: 0;
   border-top: 1px solid #E1E1E1; }
 hr.sequences {

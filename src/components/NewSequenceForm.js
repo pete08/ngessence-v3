@@ -190,7 +190,7 @@ export default function NewSequenceForm() {
             <form onSubmit={handleSubmit}>
                 {/* <h2 className="center">Create a new Sequence</h2><br/> */}
                 <div className="form-section">
-                    <label htmlFor="input-file">Select Sequence:</label>
+                    <label htmlFor="input-file">Select Sequence to Upload:</label>
                     <input onChange={handleChange} type="file" id="input-file" name="input-file" accept="text/plain;charset=US-ASCII, text/plain;charset=UTF-8, .fasta, .fastq, .txt" />
                 </div>
                 {(fileName !== "") ? <button className="center" type="submit">Upload Sequence</button>: <></>}
