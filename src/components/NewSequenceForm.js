@@ -26,6 +26,8 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { addSequence, isLoadingSequences, selectSequences } from "../features/sequences/sequencesSlice";
+import sanitize from 'sanitize-filename';
+        
 
 const getDateTime = () => {
     let today = new Date();
@@ -91,6 +93,10 @@ export default function NewSequenceForm() {
         let rawfilenameextpath = e.target.value;
         let rawfilenameextsplit = rawfilenameextpath.split('\\');
         let rawfilenameext = rawfilenameextsplit[(rawfilenameextsplit.length-1)];
+        
+        //sanitize filename prior to addition to redux state
+        rawfilenameext = sanitize(rawfilenameext);
+        
         let rawfilenameSplit = rawfilenameext.split('.');
         setFileName(`${rawfilenameSplit[0]}-${count}.${rawfilenameSplit[rawfilenameSplit.length-1]}`);
         setTrimFileName(`${rawfilenameSplit[0]}-${count}-trim`);
@@ -99,19 +105,10 @@ export default function NewSequenceForm() {
     }
     
     const handleSubmit = async (e) => {
+        
         e.preventDefault();
 
-        // 01-12-2024: move uuid from handleSubmit to handlChange for easier file mgmt
         const uuid = uuidv4();
-        // 1. create useState below trimFileName: 
-            // const [seqIdInitDigits, setSeqIdInitDigits] = useState("");
-        // 2. in HandleChange() setSeqIdInitDigits to first 4 digits of uuiv4()
-        // 2. removed uuid from handleSubmit() and use setSeqIdInitDigits using uuid in handlChange();
-        // 3. use seqIdInitDigits to create FileName
-        // 4. this unique file name ensures:
-        //4a. No errouneous dupes for redux slice stored state if user uploads same file accidently 
-        //4b-i. programmed file removal: Timed via timed function cleanupFiles() 
-        //4b-ii. user triggered file removal: /sequnces eventHandler() within Redux State.sequences list
 
         const fileInput = document.getElementById('input-file');
         // const file = new FormData();
@@ -138,6 +135,7 @@ export default function NewSequenceForm() {
         requestBody.append('input-file', file);
         requestBody.append('getfilepath', getfilepath);
         requestBody.append('filepath', filepath);
+        requestBody.append('filename', fileName);
         console.log(`4. NewSequenceForm handleSubmit: after creating requestBody, before clearing form's State`);
 
         setFileName("");
@@ -168,8 +166,17 @@ export default function NewSequenceForm() {
                 method: 'POST',
                 body: requestBody
             });
+            // Use response.json() to parse the response body as JSON
             console.log(`8. NewSequenceForm handleSubmit: within try{fetch}/catch(), after fetch`);
-            if (!response.ok) {
+            const responseData = await response.json();
+            console.log(`9. NewSequenceForm handleSubmit: within try{fetch}/catch(), after fetch, response,json():`, responseData);
+            console.log(`10. NewSequenceForm handleSubmit: within try{fetch}/catch(), after fetch, response.status:`, response.status);
+// See what the dev server and frontend provide when executing server's app.post('/upload') route: 
+// 1. I receive a response.status of 200 when triggering this form's handleSubmit() to upload file. Using this information why cannot I recreate within a test (see "server.test.js")?
+// 2a. Using "server.test.js" determine how to pass test to app.post('/upload') ; currently handleSubmit() function works approrpiately. 
+// 2b. Currenlty within "server.test.js" app.post('/upload')route testing a response.status of 500 is received
+// 3. Idea #1: Instead of using a copy of 'server.js" for Jest test suite, try using the same "server.js" and see if I can get a response.status of 200.
+        if (!response.ok) {
                 const errorMessage = response;
                 throw new Error(`HTTP Error! Status: ${response.status} Message: ${errorMessage}`);
             }
@@ -198,3 +205,60 @@ export default function NewSequenceForm() {
         </section>
     );
 }
+
+// SIMPLIFIED UPLOAD FILE FUNC, AND PUT METHOD; TO INQUIRE WITH:
+// 
+// uploadfileform.js
+// export default function NewSequenceForm() {
+//     const handleSubmit = async (e) => {
+//         const fileInput = document.getElementById('input-file');
+//         const file = fileInput.files[0];
+//         const filepath = `./uploads/${fileName}`;
+
+//         const requestBody = new FormData();
+//         requestBody.append('input-file', file);
+//         requestBody.append('getfilepath', getfilepath);
+//         requestBody.append('filepath', filepath);
+
+//         const response = await fetch('http://localhost:5000/upload', {
+//             method: 'POST',
+//             body: requestBody
+//         });
+//         if (!response.ok) {
+//             const errorMessage = response;
+//             throw new Error(`HTTP Error! Status: ${response.status} Message: ${errorMessage}`);
+//         }
+//     };
+
+//     return (
+//             <form onSubmit={handleSubmit}>
+//                 <div className="form-section">
+//                     <label htmlFor="input-file">Select Sequence to Upload:</label>
+//                     <input onChange={handleChange} type="file" id="input-file" name="input-file" accept="text/plain;charset=US-ASCII, text/plain;charset=UTF-8, .fasta, .fastq, .txt" />
+//                 </div>
+//                 {(fileName !== "") ? <button className="center" type="submit">Upload Sequence</button>: <></>}
+//             </form>
+//     );
+// }
+
+
+// server.js
+// app = express();
+// app.post("/upload", upload.single("input-file"), (req, res) => {
+//     res.setHeader("Access-Control-Allow-Origin", "*");
+//     res.setHeader("Access-Control-Allow-Methods", "POST");
+//     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+//     const { filepath } = req.body;
+    
+//     // Access the uploaded file using req.file.buffer
+//     const fileContent = req.file.buffer;
+//     // const fileContent = req.file.buffer.toString();
+    
+//     // if (!fs.existsSync(directory)) { fs.mkdirSync(directory, { recursive: true }); }
+//     fs.writeFile(filepath, fileContent, (err) => {
+//       if (err) {console.log(`/uplaod error: ${err}`)};
+//       if (err) throw err;
+//     }); 
+  
+//     res.json({ result: `successfully uploaded: ${filepath}`});
+// });

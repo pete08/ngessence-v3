@@ -23,6 +23,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
       <Route path="/" element={<AppLayout/>}>
+        <Route path="" element={<About/>} />
         <Route path="sequences" element={<Sequences/>} />
         {/* <Route path="sequences/:sequenceId" element={<Sequence/>} /> */}
         <Route path="sequences/new" element={<NewSequenceForm/>} />
