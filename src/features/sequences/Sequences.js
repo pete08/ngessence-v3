@@ -1,8 +1,11 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Sequence from "./Sequence";
-import { selectSequences, clearSequences } from "./sequencesSlice";
-import NewSequenceForm from "../../components/NewSequenceForm";
+import Sequence from "./Sequence.js";
+// import Sequence from "./Sequence";
+import { selectSequences, clearSequences } from "./sequencesSlice.js";
+// import { selectSequences, clearSequences } from "./sequencesSlice";
+import NewSequenceForm from "../../components/NewSequenceForm.js";
+// import NewSequenceForm from "../../components/NewSequenceForm";
 
 
 export default function Sequences() {

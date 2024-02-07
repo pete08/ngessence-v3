@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, NavLink } from "react-router-dom";
-import ROUTES from "../../app/routes";
+import ROUTES from "../../app/routes.js";
+// import ROUTES from "../../app/routes";
 
 export default function Footer() {
     const [imageCount, setImageCount] = useState(5);

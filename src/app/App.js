@@ -5,17 +5,17 @@ import {
   Routes
 } from "react-router-dom";
 
-import NewSequenceForm from "../components/NewSequenceForm"
-// import NewQuizForm from "../components/NewQuizForm";
-// import NewTopicForm from "../components/NewTopicForm";
-// import ScriptRunner from "../components/ShellScriptRunner";
-// import Topics from "../features/topics/Topics";
-// import Topic from "../features/topics/Topic";
-// import Quiz from "../features/quizzes/Quiz";
-// import Quizzes from "../features/quizzes/Quizzes";
-import AppLayout from "./AppLayout";
-import Sequences from "../features/sequences/Sequences";
-import About from "../components/about/AboutIt";
+import NewSequenceForm from "../components/NewSequenceForm.js"
+// import NewSequenceForm from "../components/NewSequenceForm"
+
+import AppLayout from "./AppLayout.js";
+// import AppLayout from "./AppLayout";
+import Sequences from "../features/sequences/Sequences.js";
+// import Sequences from "../features/sequences/Sequences";
+import About from "../components/about/AboutIt.js";
+// import About from "../components/about/AboutIt";
+
+
 // import Sequence from "../features/sequences/Sequence";
 
 export default function App() {

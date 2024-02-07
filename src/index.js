@@ -2,10 +2,13 @@ import React from 'react';
 import {createRoot} from 'react-dom/client';
 import './styles/normalize.css';
 import './styles/main.css';
-import App from './app/App';
+import App from './app/App.js';
+// import App from './app/App';
 import { Provider } from "react-redux";
-import store from "./app/store";
-import reportWebVitals from './reportWebVitals';
+import store from "./app/store.js";
+// import store from "./app/store";
+import reportWebVitals from './reportWebVitals.js';
+// import reportWebVitals from './reportWebVitals';
 
 const root = createRoot(document.getElementById("root"));
 root.render(

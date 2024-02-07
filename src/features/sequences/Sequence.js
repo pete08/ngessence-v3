@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { addSequenceTrim, clearSequence } from "./sequencesSlice";
+import { addSequenceTrim, clearSequence } from "./sequencesSlice.js";
+// import { addSequenceTrim, clearSequence } from "./sequencesSlice";
 
 const getDateTime = () => {
   let today = new Date();

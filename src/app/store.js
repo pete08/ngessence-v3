@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 // import reducers
-import sequencesReducer from "../features/sequences/sequencesSlice";
+import sequencesReducer from "../features/sequences/sequencesSlice.js";
+// import sequencesReducer from "../features/sequences/sequencesSlice";
 
 const localStorageMiddleware = (store) => (next) => (action) => {
   const result = next(action);

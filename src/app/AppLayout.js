@@ -1,9 +1,12 @@
 import React from "react";
 import { Outlet, NavLink } from "react-router-dom";
-import ROUTES from "./routes";
-// import Header from "../../header";
-import Footer from "../components/footer/Footer";
+import ROUTES from "./routes.js";
+// import ROUTES from "./routes";
+import Footer from "../components/footer/Footer.js";
+// import Footer from "../components/footer/Footer";
 
+
+// import Header from "../../header.js";
 
 export default function AppLayout() {
     return (

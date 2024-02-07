@@ -2,6 +2,7 @@
   "name": "ngessence",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.17.0",
@@ -13,6 +14,7 @@
     "express": "^4.18.2",
     "file-type": "^19.0.0",
     "form-data": "^4.0.0",
+    "istextorbinary": "^9.5.0",
     "mime": "^4.0.1",
     "multer": "^1.4.5-lts.1",
     "react": "^18.2.0",
@@ -34,8 +36,8 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "next/babel"
     ]
   },
   "browser": {
@@ -54,6 +56,16 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.23.9",
+    "@babel/preset-env": "^7.23.9",
+    "babel-jest": "^29.7.0",
     "jest": "^27.5.1"
+  },
+  "jest": {
+    "transformIgnorePatterns": ["node_modules/(?!(file-type)/)"],
+    "transform": {
+      "^.+\\.(js|jsx|ts|tsx|mjs)$": "babel-jest",
+      "^.+\\.jsx?$" : "babel-jest"
+    }
   }
 }
