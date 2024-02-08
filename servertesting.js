@@ -20,7 +20,7 @@ const storage = multer.memoryStorage();
 // for uploading using multer, limit file size
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 1024 * 1024 * 5.5 /* 1024^2 bytes = 1MB */ },
+  limits: { fileSize: 1024 * 1024 * 4 /* 1024^2 bytes = 1MB */ },
 });
 
 export default function startTestServer(port, callback) {
@@ -37,9 +37,9 @@ export default function startTestServer(port, callback) {
                 if (err) {
                     // Handle Multer errors
                     if (err.code === "LIMIT_FILE_SIZE") {
-                      console.error("File size limit exceeded:", err.code);
-                      console.error("File size limit exceeded:", err.message);
-                      res.status(400).json({ error: `${filename}: File size limit exceeded` });
+                        res.status(400).json({ error: `${filename}: File size limit exceeded` });
+                        console.error("File size limit exceeded:", err.message);
+                        return;
                     } else {
                         // Handle other errors
                         throw err;
@@ -53,6 +53,7 @@ export default function startTestServer(port, callback) {
                 // Check : fileContent is text/plain
                 if (isText(null, fileContent) !== true) {
                     res.status(400).json({ error: `${filename}: does not appear to be a text file. Only text files are allowed.` });
+                    console.error("File does not appear to be a text file:", err.message);
                     return;
                 }
                 // write file to upload location

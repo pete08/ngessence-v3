@@ -70,7 +70,15 @@ describe('upload appropriate file to `post(`/upload`) route`', () => {
     // (a.) Check if the file contains certain characters
     const containsCertainCharacters = ['g', 't', 'a', 'c', '\n'].every(char => fileContent.includes(char));
     expect(containsCertainCharacters).toBeTruthy();
-
+    //START HERE: Make another test: "check contents do NOT have g, t, a, c..."
+  });
+  test('check for file `character` contents', async () => {
+    const fileContent = fs.readFileSync(uploadedFilePath, 'utf-8');
+    
+    // (a.) Check if the file contains certain characters
+    const containsCertainCharacters = ['g', 't', 'a', 'c', '\n'].every(char => fileContent.includes(char));
+    expect(containsCertainCharacters).toBeTruthy();
+    //START HERE: Make another test: "check contents do NOT have g, t, a, c..."
   });
 
   test('check for file extension is `.txt`', async () => {
@@ -79,6 +87,7 @@ describe('upload appropriate file to `post(`/upload`) route`', () => {
     expect(fileExtension).toBe('.txt');
 
   });
+
   // test('check to ensure file does not include nefarious contents', async () => {
   //   const fileContent = fs.readFileSync(uploadedFilePath, 'utf-8');
     
@@ -104,15 +113,14 @@ describe('upload appropriate file to `post(`/upload`) route`', () => {
   // console.log(`6. server.test.js; AFTER Test('should upload file to CDN'), AFTER Test('/user content-length`); // GETS LOGGED BEFORE... TEST('SHOULD UPLOF FILE TO CDN') & TEST('/USER CONTENT-LENGTH')
 });
 
-describe('upload inappropriate file type to post `/upload`', () => {
-    // Assuming that the file is saved in the same directory with the name 'testfile01.txt'
-    const fileName = `2023-10-05_CodecademyProgress.png`;
-    const uploadedFilePath = `uploads/${fileName}`;
-    const filePath = `${__dirname}/testFiles/${fileName}`;
-  
-    console.log(`2. server.test.js; upload inappropriate file: ${fileName}`);
-  
+describe('upload inappropriate file to post `/upload`', () => {
     test('upload .png file', async () => {
+        let fileName = `2023-10-05_CodecademyProgress.png`;
+        let uploadedFilePath = `uploads/${fileName}`;
+        let filePath = `${__dirname}/testFiles/${fileName}`;
+
+        console.log(`server.test.js; upload TEXT file: ${fileName}`);
+
         const response = await request(testServer)
         .post('/upload')
         .field('filepath', `${filePath}`) // 'filepath': Path to specify file's location 
@@ -127,13 +135,11 @@ describe('upload inappropriate file type to post `/upload`', () => {
 
         console.log(`Test's response.body, for "upload .png file": ${JSON.stringify(response.body)}`)
 
-        expect(response.body).toHaveProperty('error', `${fileName}: does not appear to be a text file. Only text files are allowed.`); 
-  
-    });  
-});
+        expect(response.body).toHaveProperty('error', `${fileName}: does not appear to be a text file. Only text files are allowed.`);
 
-describe('upload inappropriate file Size to post `/upload`', () => {
-    test('upload file of 6.1 MB', async () => {
+    });
+
+    test('upload file too large (>6MB)', async () => {
         let fileName = `16s_426-read-1.fastq`;
         let filePath = `${__dirname}/testFiles/${fileName}`;
 

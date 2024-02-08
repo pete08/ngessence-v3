@@ -86,6 +86,7 @@ export default function NewSequenceForm() {
     const [fileName, setFileName] = useState("");
     const [trimFileExt, setTrimFileExt] = useState("");
     const [trimFileName, setTrimFileName] = useState("");
+    const [uploadError, setUploadError] = useState(null);
     console.log(`6. NewSequenceForm: After setting up react useState fileName, trimFileExt, trimFileName`)
     // const [id, setId] = useState("");
     // const seqsLoading = useSelector(isLoadingSequences);
@@ -159,8 +160,7 @@ export default function NewSequenceForm() {
             'timestamp': timestamp,
         };
 
-        console.log(`6. NewSequenceForm handleSubmit: \nafter setting slice input data:\n${JSON.stringify(someFormData)} \n\n 6. before addSequence`);
-        dispatch(addSequence({formData: someFormData}));
+
 
         console.log(`7. NewSequenceForm handleSubmit: after addSequence, before try{fetch}/catch() stmt`);
         try {
@@ -168,22 +168,24 @@ export default function NewSequenceForm() {
                 method: 'POST',
                 body: requestBody
             });
-            // Use response.json() to parse the response body as JSON
             console.log(`8. NewSequenceForm handleSubmit: within try{fetch}/catch(), after fetch`);
             const responseData = await response.json();
-            console.log(`9. NewSequenceForm handleSubmit: within try{fetch}/catch(), after fetch, response,json():`, responseData);
-            console.log(`10. NewSequenceForm handleSubmit: within try{fetch}/catch(), after fetch, response.status:`, response.status);
-// See what the dev server and frontend provide when executing server's app.post('/upload') route: 
-// 1. I receive a response.status of 200 when triggering this form's handleSubmit() to upload file. Using this information why cannot I recreate within a test (see "server.test.js")?
-// 2a. Using "server.test.js" determine how to pass test to app.post('/upload') ; currently handleSubmit() function works approrpiately. 
-// 2b. Currenlty within "server.test.js" app.post('/upload')route testing a response.status of 500 is received
-// 3. Idea #1: Instead of using a copy of 'server.js" for Jest test suite, try using the same "server.js" and see if I can get a response.status of 200.
-        if (!response.ok) {
-                const errorMessage = response;
-                throw new Error(`HTTP Error! Status: ${response.status} Message: ${errorMessage}`);
+            if (responseData.error ) {
+                const errorForUser = responseData.error;
+            }
+            console.log(`9. NewSequenceForm handleSubmit: within try{fetch}/catch(), after fetch, response.statues --&-- response.json():`, response.status, " --&-- " , responseData);
+
+            if (!response.ok) {
+                setUploadError(errorForUser || 'Unknown error occurred! ahh!');
+                throw new Error(`HTTP Error! Status: ${response.status} responseData: ${JSON.stringify(responseData)}`);
+            } else {
+                setUploadError(null);
+                console.log(`6. NewSequenceForm handleSubmit: \nafter setting slice input data:\n${JSON.stringify(someFormData)} \n\n 6. before addSequence`);
+                dispatch(addSequence({formData: someFormData}));
             }
         } catch (error) {
             console.error(`NewSequenceForm handleSubmit: catch Error -> : ${error}`);
+            setUploadError('Network or server error occurred');
         }
     };
 
@@ -204,6 +206,7 @@ export default function NewSequenceForm() {
                 </div>
                 {(fileName !== "") ? <button className="center" type="submit">Upload Sequence</button>: <></>}
             </form>
+                {(uploadError) ? <div style={{ color: "red"}}>{uploadError}</div>: <></>}
         </section>
     );
 }

@@ -64,6 +64,15 @@ app.post("/upload", (req, res, next) => {
             res.setHeader("Access-Control-Allow-Origin", "*");
             res.setHeader("Access-Control-Allow-Methods", "POST");
             res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+            // check: fileContent contains: /n, `c`, `t`, `a`, `g`
+            // 
+            // const fileContent = fs.readFileSync(uploadedFilePath, 'utf-8');
+            // // (a.) Check if the file contains certain characters
+            // const containsCertainCharacters = ['g', 't', 'a', 'c', '\n'].every(char => fileContent.includes(char));
+            // expect(containsCertainCharacters).toBeTruthy();
+            // 
+            // 
+            // 
 
             // Check : fileContent is text/plain
             if (isText(null, fileContent) !== true) {
@@ -222,13 +231,15 @@ function cleanupFiles() {
   console.log(`\ncleanupFiles: after uploadDir path.join`);
   console.log(`\ncleanupFiles: path.join is:`);
 
+  // START HERE - 2024-02-07: Add 'idle' idle-timer' to (1) trigger server's 'cleanupFiles()' and (2) remove use.state values
+  // [ ] - 1. https://blog.logrocket.com/make-idle-timer-react-app/
+  // [ ] - 2. ...
   const cleanupFilesRecursive = (cleanThisDir) => {
     fs.readdir(cleanThisDir, (err, files) => {
       if (err) {
         console.error("Error reading upload directory:", err);
         return;
       }
-
       const currentTime = Date.now();
 
       files.forEach((file) => {
