@@ -4,33 +4,37 @@ import React from "react";
 export default function About() {
     return (
         <section>
-            <div className="welcomeContent">Hello and Welcome to NGEssence!</div>
+            <div className="welcomeContent">Hello and Welcome to NGEssence!</div><br />
             <section className="center">
             <div className="aboutContent">
-                <p>This website utilizes BBTool's <a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/" target="_blank" rel="noreferrer">BBDuk</a> program sourced from <a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/" target="_blank" rel="noreferrer"> JGI's DOE Office of Science User Facility's BBTools</a>. Credit is provided to DOE office of science user facility. See its <a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/" target="_blank" rel="noreferrer">BBDuk Guide</a>.
+                <h4>Purpose</h4>
+                <p>This site formats/processes sequencing files for use with Next Gen sequencing. First, <b>upload</b> raw sequencing file(s). Then select <b>RUN BBDUK TRIM</b> on each file you'd like to process. Finally, <b>download</b> the final processed/formatted sequencing file(s) prepared for Next Gen sequencing (e.g. Illumina). Periodically the site will permanently delete any uploaded files. You may also select <b>remove</b> to delete uploaded and processed file. <br />
                 </p>
-                <h4>BBDuk</h4>
+                <h5>Benefit</h5><p>Circumvent downloading and running separate software <em>(BBTools)</em> in your terminal.</p><br />
+                <h4>How Site Works</h4>
                 <p>
-                    This site recreates BBDuk to allow processing without downloading and running BBTools in your terminal This site formats and processes uploaded sequence files using BBDuk. Firstly, upload raw sequencing file(s). Then process file(s) using BBDuk. Next, you can download the processed/formatted sequencing file(s) prepared for Next Gen sequencing (e.g. Illumina).
-                </p>
-                <h4>Adapter Trimming</h4> 
+                    This site runs using BBDuk program, part of BBMap, sourced from the Joint Genome Institute (JGI), part of the U.S. Dept of Energy (DOE) Office of Science User Facility.<br /> BBMap is a multithread bioinformatics tool designed to analyze DNA and RNA sequence data. <br />BBDuk filters, trims, or masks reads with kmer matches to an artifact/contaminant file. <br/>
+                </p><br />
+                <h4>Offline Equivalent</h4> 
                 <p>
-                    This website utilizes BBDuk's adapted trimming option, see explanation in DOE's <a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/" target="_blank" rel="noreferrer">BBDuk Guide's usage examples</a>. 
-                    <br/>
-                    <br/>
+                    Equivalent terminal command using BBDuk's adapter-trimming option:
+                    <br />
                     <div className="cmdBashScript">&nbsp;&nbsp;&nbsp;&nbsp;`$ bbduk.sh in=reads.fq out=clean.fq ref=adapters.fa ktrim=r k=23 mink=11 hdist=1 tpe tbo`</div>
-                </p>
-                <h4>Source</h4>
+                    
+                    <br />
+                    See more sequence processing options <em>(using terminal)</ em> in the <a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/" target="_blank" rel="noreferrer">BBDuk User Guide</a>.
+                    <br/>
+                    
+                </p><br />
+                <h4>Sources</h4>
                 <p>
-                    BBTools (part of larger BBMap suite) is a suite of fast, multithreaed bioinformatics tools designed for analysis of DNA and RNA sequence data.<br/><br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    SourceForge <em>(open source software platform)</em> :&nbsp;&nbsp; Download<a href="https://sourceforge.net/projects/bbmap/" target="_blank" rel="noreferrer"> BBMap <em>(contains: BBTools , BBDuk)</em></a>
-                    <br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    BBDuk User Guide :&nbsp;&nbsp;<a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/" target="_blank" rel="noreferrer">BBDuk User Guide</a>
-                    <br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    Author :&nbsp;&nbsp;<a href="https://sourceforge.net/u/brian-jgi/profile/" target="_blank" rel="noreferrer">Brian Bushnell</a>
+                    <ul>
+                        <li><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/" target="_blank" rel="noreferrer">BBDuk User Guide</a></li>
+                        <li><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/" target="_blank" rel="noreferrer">BBTools Information Page</a>: to gain info on BBDuk and other tools</li>
+                        <li><a href="https://sourceforge.net/projects/bbmap/" target="_blank" rel="noreferrer"> BBMap</a>: to download BBDuk tool and utilize through terminal </li>
+                        <li>Author: <a href="https://sourceforge.net/u/brian-jgi/profile/" target="_blank" rel="noreferrer"> Brian Bushnell </a> </li>
+                        
+                    </ul>
                 </p>
             </div>
             </section>

@@ -88,29 +88,6 @@ describe('upload appropriate file to `post(`/upload`) route`', () => {
 
   });
 
-  // test('check to ensure file does not include nefarious contents', async () => {
-  //   const fileContent = fs.readFileSync(uploadedFilePath, 'utf-8');
-    
-  //   // (b.) Add your checks for nefarious contents here
-
-  // });
-
-  // console.log(`4. server.test.js; AFTER Test('should upload file to CDN'), BEFORE Test('/user content-length`); // GETS LOGGED BEFORE... TEST('SHOULD UPLOF FILE TO CDN')
-
-  // test('/user content-length', async () => {
-  //   console.log(`5a. server.test.js; IN Test('/user content-length'), BEFORE await request(testServer).get('/user')`); 
-  //   await request(testServer)
-  //     .get('/user')
-  //     .expect('Content-Type', /json/)
-  //     .expect('Content-Length', '40')
-  //     .expect(200)
-  //     .catch(function(err, res) {
-  //       if (err) throw err;
-  //     });
-  //   console.log(`5b. server.test.js; IN Test('/user content-length'), AFTER await request(testServer)`); 
-  // })
-
-  // console.log(`6. server.test.js; AFTER Test('should upload file to CDN'), AFTER Test('/user content-length`); // GETS LOGGED BEFORE... TEST('SHOULD UPLOF FILE TO CDN') & TEST('/USER CONTENT-LENGTH')
 });
 
 describe('upload inappropriate file to post `/upload`', () => {
@@ -156,7 +133,27 @@ describe('upload inappropriate file to post `/upload`', () => {
 
         expect(response.body).toHaveProperty('error', `${fileName}: File size limit exceeded`); 
   
-    });  
+    }); 
+
+    test(`upload file contains 'g', 't', 'a', 'c'`, async () => {
+        let fileName = `16s_426-read-11.fasta`;
+        let filePath = `${__dirname}/testFiles/${fileName}`;
+
+        console.log(`server.test.js; File does not contain characters 'g', 't', 'a', 'c' or 'gt', 'tg', 'ac', 'ca': ${fileName}`);
+
+        const response = await request(testServer)
+        .post('/upload')
+        .field('filepath', `${filePath}`) // 'filepath': Path to specify file's location 
+        .field('filename', `${fileName}`) // 'filename': filename
+        .attach('input-file', fs.readFileSync(filePath), `${fileName}`)
+        .expect(400);
+
+        console.log(`Test's response.body, for "upload file of 6.1 MB": ${JSON.stringify(response.body)}`)
+
+        expect(response.body).toHaveProperty('error', `File does not appear to contain appropriate base characters: 'G', 'T', 'A', 'C'`); 
+  
+    }); 
+
 });
 
 

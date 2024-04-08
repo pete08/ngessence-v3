@@ -168,15 +168,13 @@ export default function NewSequenceForm() {
                 method: 'POST',
                 body: requestBody
             });
-            console.log(`8. NewSequenceForm handleSubmit: within try{fetch}/catch(), after fetch`);
+            console.log(`8. NewSequenceForm handleSubmit: within try{fetch}/catch(), after FETCH before await RESPONSE`);
             const responseData = await response.json();
-            if (responseData.error ) {
-                const errorForUser = responseData.error;
-            }
-            console.log(`9. NewSequenceForm handleSubmit: within try{fetch}/catch(), after fetch, response.statues --&-- response.json():`, response.status, " --&-- " , responseData);
+
+            console.log(`9. NewSequenceForm handleSubmit: within try{fetch}/catch(), after FETCH after await RESPONSE; response.status: "${response.status}" --&-- response.json(): "${JSON.stringify(responseData)}"`);
 
             if (!response.ok) {
-                setUploadError(errorForUser || 'Unknown error occurred! ahh!');
+                setUploadError(responseData.error);
                 throw new Error(`HTTP Error! Status: ${response.status} responseData: ${JSON.stringify(responseData)}`);
             } else {
                 setUploadError(null);
@@ -184,8 +182,10 @@ export default function NewSequenceForm() {
                 dispatch(addSequence({formData: someFormData}));
             }
         } catch (error) {
-            console.error(`NewSequenceForm handleSubmit: catch Error -> : ${error}`);
-            setUploadError('Network or server error occurred');
+            console.error(`NewSequenceForm handleSubmit error: ${error}`);
+            // setUploadError('Network or server error occurred');
+            //          Current "File Too Large" error: Line 188 "setUploadError('Network or server error occurred');"
+            //          Preferred "File Too Large" error: "responseData"
         }
     };
 

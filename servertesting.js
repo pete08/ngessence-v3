@@ -56,6 +56,22 @@ export default function startTestServer(port, callback) {
                     console.error("File does not appear to be a text file:", err.message);
                     return;
                 }
+
+                // Check : fileContent contains key Characters
+                const keyCharacters = {
+                    single : ['G', 'T', 'A', 'C', `\n`],
+                    keybase0: ['GT', 'TG'],
+                    keybase1: ['AC', 'CA']
+                };
+                const keyCharactersCheck = keyCharacters['single'].every(char => fileContent.includes(char)) && keyCharacters['keybase0'].some(char => fileContent.includes(char)) && keyCharacters['keybase1'].some(char => fileContent.includes(char));
+                console.log(`keyCharactersCheck: ${keyCharactersCheck}`)
+
+                if (keyCharactersCheck !== true) {
+                    res.status(400).json({ error: `File does not appear to contain appropriate base characters: 'G', 'T', 'A', 'C'`});
+                    return;
+                }
+
+
                 // write file to upload location
                 fs.writeFile(filepath, fileContent, (err) => {
                     if (err) {

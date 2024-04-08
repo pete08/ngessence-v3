@@ -31,10 +31,12 @@ const __dirname = path.dirname(__filename);
 
 // for path to upload docs
 const storage = multer.memoryStorage();
-// for uploading using multer, limit file size
+// limit upload file size
+const bytesFileSizeLimit = (1024 * 1024 * 7); // /* 1024^2 bytes = 1MB */
+
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 1024 * 1024 * 2 /* 1024^2 bytes = 1MB */ },
+  limits: { fileSize: bytesFileSizeLimit  },
 });
 
 // Error with favicon(path.join(__dirname...: "__dirname is not defined in ES module scope"
@@ -54,31 +56,42 @@ app.post("/upload", (req, res, next) => {
                 if (err.code === "LIMIT_FILE_SIZE") {
                     console.error("File size limit exceeded:", err.code);
                     console.error("File size limit exceeded:", err.message);
-                    res.status(400).json({ error: `${filename}: File size limit exceeded` });
+                    res.status(400).json({ error: `File size limit of ${((bytesFileSizeLimit/(1024*1024)).toFixed(2)).toString()}MB, may have been exceeded` });
+                    return;
                 } else {
                   // Handle other errors
                   throw err;
                 }
             }
-            const fileContent = req.file.buffer;            
+            const fileContent = req.file.buffer;  
+        
             res.setHeader("Access-Control-Allow-Origin", "*");
             res.setHeader("Access-Control-Allow-Methods", "POST");
             res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-            // check: fileContent contains: /n, `c`, `t`, `a`, `g`
-            // 
-            // const fileContent = fs.readFileSync(uploadedFilePath, 'utf-8');
-            // // (a.) Check if the file contains certain characters
-            // const containsCertainCharacters = ['g', 't', 'a', 'c', '\n'].every(char => fileContent.includes(char));
-            // expect(containsCertainCharacters).toBeTruthy();
-            // 
-            // 
-            // 
-
             // Check : fileContent is text/plain
             if (isText(null, fileContent) !== true) {
-                res.status(400).json({ error: `${filename} : does not appear to be text file. Only text files are allowed.` });
+                res.status(400).json({ error: `File does not appear to be text file. Only text files are allowed.` });
                 return;
             }
+            
+            console.log(`fileContent.toString(): ${fileContent.toString().substring(0, 200)}`)
+            
+            
+            // Check : fileContent contains key Characters
+            const keyCharacters = {
+                single : ['G', 'T', 'A', 'C', `\n`],
+                //keybase0: ['GT', 'TG'],
+                //keybase1: ['AC', 'CA']
+            };
+            const keyCharactersCheck = keyCharacters['single'].every(char => fileContent.includes(char))
+            // const keyCharactersCheck = keyCharacters['single'].every(char => fileContent.includes(char)) && keyCharacters['keybase0'].some(char => fileContent.includes(char)) && keyCharacters['keybase1'].some(char => fileContent.includes(char));
+            console.log(`keyCharactersCheck: ${keyCharactersCheck}`)
+
+            if (keyCharactersCheck !== true) {
+                res.status(400).json({ error: `File does not appear to contain appropriate base characters: 'G', 'T', 'A', 'C'`});
+                return;
+            }
+
             // write file to upload location
             fs.writeFile(filepath, fileContent, (err) => {
                 if (err) {
@@ -275,9 +288,9 @@ function cleanupFiles() {
 }
 
 // // Schedule the cleanup function to reflect thresholdTime
-// setInterval(cleanupFiles, 2 * 60 * 1000); // Run every 2 min
+setInterval(cleanupFiles, 5 * 60 * 1000); // Run every 5 min
 
-//  NOTE: GET '/user' worked as control within example.test.js. Attempting to re-create successful execution of sest outside exampole.test.js
+//  NOTE: GET '/user' worked as control test when learning testing within example.test.js. Attempting to re-create successful execution of test outside example.test.js
 app.get("/user", function (req, res) {
     res.status(200).json({ name: "johnjacobheimerschmidtn" });
 });
