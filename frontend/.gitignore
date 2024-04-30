@@ -1,0 +1,40 @@
+# dependencies
+/node_modules
+node_modules
+dist
+lib
+coverage
+es
+temp/
+react-redux-*/
+.vscode/
+.cache/
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*practice*
+*example*
+sequencescript-copy.sh
+
+/__tests__/testFiles/*
+server-01.js
+/src/data/*.fasta
+/src/data/*.fastq
+/src/data/*.fa
+/src/data/*.fq
+/src/api/bbtools*
+/src/api/bbtools/*
+/public/data/*
+/uploads/*
+/uploads/int/*
+*.fa*
