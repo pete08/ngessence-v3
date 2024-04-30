@@ -22,7 +22,7 @@ import { isText } from "istextorbinary";
 // const { Server } = require("http");
 // for general front-end server built on Express.js
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 // const { checkFile } = require('./src/components/filehandling/fileService');
 
@@ -302,7 +302,7 @@ app.use((err, req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
 });
 
-// server listening for requests to port 5000
+// server listening for requests to port process.env.PORT || 5000
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

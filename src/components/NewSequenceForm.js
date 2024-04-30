@@ -46,6 +46,7 @@ const getDateTime = () => {
 async function getScript() {
     try {
         const response = await fetch('http://localhost:5000/runScript');
+        // const response = await fetch('http://localhost:4000/runScript');
         if (!response.ok) {
             throw new Error(`HTTP Error! Status: ${response.status}`);
         }
@@ -165,6 +166,7 @@ export default function NewSequenceForm() {
         console.log(`7. NewSequenceForm handleSubmit: after addSequence, before try{fetch}/catch() stmt`);
         try {
             const response = await fetch('http://localhost:5000/upload', {
+            // const response = await fetch('http://localhost:4000/upload', {
                 method: 'POST',
                 body: requestBody
             });

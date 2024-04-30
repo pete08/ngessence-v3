@@ -28,14 +28,14 @@ import path from 'path';
 //   })
 let testServer;
 
-console.log(`1a. server.test.js; BEFORE beforeAll(() => {testServer = startTestServer(5000)...})`);
+console.log(`1a. server.test.js; BEFORE beforeAll(() => {testServer = startTestServer(4000)...})`);
 beforeAll(async () => {
-  testServer = startTestServer(5000);
+  testServer = startTestServer(4000);
 });
 afterAll(async () => {
   testServer.close();
 });
-console.log(`1b. server.test.js; AFTER beforeAll(() => {testServer = startTestServer(5000)...})`);
+console.log(`1b. server.test.js; AFTER beforeAll(() => {testServer = startTestServer(4000)...})`);
 
 
 describe('upload appropriate file to `post(`/upload`) route`', () => {

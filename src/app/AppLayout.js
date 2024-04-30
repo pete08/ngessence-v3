@@ -29,29 +29,6 @@ export default function AppLayout() {
                 </NavLink>
             </div>
             <hr className="header"/>
-            {/* <div className="container">
-                <div className="four columns header-nav">
-                <NavLink to={ROUTES.sequencesRoute()} >
-                    <div className="button">
-                        Sequences
-                    </div>
-                </NavLink>
-                </div>
-                <div className="four columns header-nav">
-                <NavLink to={ROUTES.newSequenceRoute()} >
-                    <div className="button">
-                        New Sequence
-                    </div>
-                </NavLink>
-                </div>
-                <div className="four columns header-nav">
-                <NavLink to={ROUTES.about()}>
-                    <div className="button">
-                        About
-                    </div>  
-                </NavLink>
-                </div>
-            </div> */}
             <Outlet/>
             <hr className="footer"/>
             <Footer />

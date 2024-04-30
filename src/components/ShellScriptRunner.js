@@ -16,7 +16,7 @@ const ShellScriptRunner = () => {
   useEffect(() => {
     // Fetch script result from the server
     fetch('http://localhost:5000/runScript')
-    // fetch('http://127.0.0.1:5000/runScript')
+    // fetch('http://localhost:4000/runScript')
       .then((response) => response.text())
       .then((result) => setScriptResult(result))
       .catch((error) => console.error('Error fetching script result:', error));

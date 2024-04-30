@@ -52,6 +52,7 @@ export default function Sequence({sequence}) {
       console.log("5. clicktoTrim: Before fetch, in try{fetch(runSeqTrim)/catch() stmt");
       
       const response = await fetch('http://localhost:5000/runSeqTrim', {
+    //   const response = await fetch('http://localhost:4000/runSeqTrim', {
         method: 'POST',
         body: requestBody
       });
@@ -86,6 +87,7 @@ export default function Sequence({sequence}) {
     console.log(`3. clicktoDnldTxtFile: before try/catch fetch`)
     try {
       const response = await fetch(`http://localhost:5000/dnldSeqTrim?sampleFileName=${seqTrimOutputFileName}`, {
+    //   const response = await fetch(`http://localhost:4000/dnldSeqTrim?sampleFileName=${seqTrimOutputFileName}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'text/plain',
@@ -135,16 +137,9 @@ export default function Sequence({sequence}) {
     console.log(`2. clicktoRemoveSeq: after dispatch(clearSequence()`);
   }
 
-//2024-01-17:START HERE , 
-// [1]. witihn eventHAndler function of removeSeq:
-//    i. This button should remove: 
-//      State.sequecne reference, (COMPELTED)
-//      Associated files: (2a)file, (2b)file-trim; (NOT STARTED)
-//    ii. prior to this occuring you must create a GET action within server.js to conduct this using a URL query parameter (or other way to send sequence's filenames), that then redirects user to /sequences list
-//    iii. if the removal of files occurs then /sequences list (State.sequences) should reflect this and show 'runbbDuk' button again (maybe use redux's  effectState on the file path to the sequence files) .
-//    iv. perhaps when user hits 'download' this triggers both:
-//      - state removal
-//      - file, file-trim removal
+
+  setInterval(clicktoRemoveSeq, 5 * 60 * 1000); // Run every 5 min
+
 
   return (
     <div className="wrapper">

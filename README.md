@@ -28,6 +28,11 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
+### `node server.js`
+
+Runs the server that executes [BBDUK library](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/)'s bash script on sequencing files\ 
+And temporarly stores the completed sequencing files for download.
+
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.\
