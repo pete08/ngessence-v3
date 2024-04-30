@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import sanitize from 'sanitize-filename';
 import { addSequence, isLoadingSequences, selectSequences } from "../features/sequences/sequencesSlice.js";
-        
 
 const getDateTime = () => {
     let today = new Date();
@@ -18,22 +17,22 @@ const getDateTime = () => {
     return dateTime;
 }
 
-async function getScript() {
-    try {
-        const response = await fetch('http://localhost:5000/runScript');
-        // const response = await fetch('http://localhost:4000/runScript');
-        if (!response.ok) {
-            throw new Error(`HTTP Error! Status: ${response.status}`);
-        }
-        const responseBody = await response.text();
-        // console.log(`Response Body:\n${responseBody}`);
-        return responseBody;
+// async function getScript() {
+//     try {
+//         const response = await fetch('http://localhost:5000/runScript');
+//         // const response = await fetch('http://localhost:4000/runScript');
+//         if (!response.ok) {
+//             throw new Error(`HTTP Error! Status: ${response.status}`);
+//         }
+//         const responseBody = await response.text();
+//         // console.log(`Response Body:\n${responseBody}`);
+//         return responseBody;
 
-    } catch (error) {
-        // console.log(`unsuccessful sequence run`);
-        console.error(`unsuccessful sequence run ${error.message}`);
-    }
-}
+//     } catch (error) {
+//         // console.log(`unsuccessful sequence run`);
+//         console.error(`unsuccessful sequence run ${error.message}`);
+//     }
+// }
 
 function outputExtension(extension) { 
     let outputExt;

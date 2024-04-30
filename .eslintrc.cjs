@@ -6,7 +6,9 @@ exports = {
     extends: [
       'react-app/jest',
       'plugin:babel/recommended',
-      'eslint:recommended'
+      'eslint:recommended',
+      '@babel/plugin-transform-private-property-in-object', 
+      'next/core-web-vitals'
     ],
     plugins: ['babel', 'import'],
     rules: {
