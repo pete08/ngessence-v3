@@ -1,28 +1,3 @@
-// To Populate following the sequenceSlice.js State creation
-// [X] - create sequenceSlice data feature component (featuers/sequences/sequencesSlice.js)
-// [X] - create sequences data feature component (featuers/sequences/Sequences.js)
-// [X] - create sequences data feature component - Runs Script (featuers/component/NewSequencesForm.js)
-// [X] - create sequence data feature component added as module to /sequences (featuers/sequences/Sequence.js)
-// [X] - sequenceSlice to Store.js
-
-// [X] - localhost:3000
-// [X] - localhost:5000 - frontend Express.js server, "./server.js": allows Shell Script... Reactjs Does NOT allow both FrontEnd App and Shell Script)
-
-// [ ] - NewSequenceForm features:
-//      |- [X] form can obtain file to be used in eventHandler
-//      |- [X] MOST IMPORTANT: ensure the triggered eventHandler Function kicks off the sequences run/processing bash script 
-//      |- [X] Apply a "IlluminaPass" boolean state attribute (`state.sequences.sequences.id.illuminaAcceptable`): True or False
-//      |- [ ] Add a "IlluminaPass" POST method, with logic to set `state.sequences.sequences.id.illuminaAcceptable` to either: True, False
-// [X] - Sequencing page
-//      |- [X] - Display uploaded files' names 
-//      |- [X] - Display uploaded files' attributes 
-//      |- [X] - Add upload form to upload additional sequence files
-//      |- [X] - Add option to download a "successful" completion run
-
-// [ ] - Any testing items
-//      |- [ ] - how to handle "unclean" output from processing, log output (extraReducer action: error check)
-//      |- [ ] - 
-
 
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -185,9 +160,6 @@ export default function NewSequenceForm() {
             }
         } catch (error) {
             console.error(`NewSequenceForm handleSubmit error: ${error}`);
-            // setUploadError('Network or server error occurred');
-            //          Current "File Too Large" error: Line 188 "setUploadError('Network or server error occurred');"
-            //          Preferred "File Too Large" error: "responseData"
         }
     };
 
@@ -212,60 +184,3 @@ export default function NewSequenceForm() {
         </section>
     );
 }
-
-// SIMPLIFIED UPLOAD FILE FUNC, AND PUT METHOD; TO INQUIRE WITH:
-// 
-// uploadfileform.js
-// export default function NewSequenceForm() {
-//     const handleSubmit = async (e) => {
-//         const fileInput = document.getElementById('input-file');
-//         const file = fileInput.files[0];
-//         const filepath = `./uploads/${fileName}`;
-
-//         const requestBody = new FormData();
-//         requestBody.append('input-file', file);
-//         requestBody.append('getfilepath', getfilepath);
-//         requestBody.append('filepath', filepath);
-
-//         const response = await fetch('http://localhost:5000/upload', {
-//             method: 'POST',
-//             body: requestBody
-//         });
-//         if (!response.ok) {
-//             const errorMessage = response;
-//             throw new Error(`HTTP Error! Status: ${response.status} Message: ${errorMessage}`);
-//         }
-//     };
-
-//     return (
-//             <form onSubmit={handleSubmit}>
-//                 <div className="form-section">
-//                     <label htmlFor="input-file">Select Sequence to Upload:</label>
-//                     <input onChange={handleChange} type="file" id="input-file" name="input-file" accept="text/plain;charset=US-ASCII, text/plain;charset=UTF-8, .fasta, .fastq, .txt" />
-//                 </div>
-//                 {(fileName !== "") ? <button className="center" type="submit">Upload Sequence</button>: <></>}
-//             </form>
-//     );
-// }
-
-
-// server.js
-// app = express();
-// app.post("/upload", upload.single("input-file"), (req, res) => {
-//     res.setHeader("Access-Control-Allow-Origin", "*");
-//     res.setHeader("Access-Control-Allow-Methods", "POST");
-//     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-//     const { filepath } = req.body;
-    
-//     // Access the uploaded file using req.file.buffer
-//     const fileContent = req.file.buffer;
-//     // const fileContent = req.file.buffer.toString();
-    
-//     // if (!fs.existsSync(directory)) { fs.mkdirSync(directory, { recursive: true }); }
-//     fs.writeFile(filepath, fileContent, (err) => {
-//       if (err) {console.log(`/uplaod error: ${err}`)};
-//       if (err) throw err;
-//     }); 
-  
-//     res.json({ result: `successfully uploaded: ${filepath}`});
-// });

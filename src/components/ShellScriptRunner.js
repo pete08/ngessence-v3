@@ -22,21 +22,6 @@ const ShellScriptRunner = () => {
       .catch((error) => console.error('Error fetching script result:', error));
   }, []);
 
-  //add new bash shell result to state.seqeunces
-  // let id = uuidv4();
-  // YYYY-MM-DD HHmmss
-  // let today = new Date();
-  // let fullyr = today.getUTCFullYear(); // (January gives 0)
-  // let month = (today.getUTCMonth()+1); // (January gives 0)
-  // let date = today.getUTCDate(); // (January gives 0)
-  // let hrs = today.getUTCHours(); // (January gives 0)
-  // let minutes = today.getUTCMinutes(); // (January gives 0)
-  // let seconds = today.getUTCSeconds(); // (January gives 0)
-  // let timestamp = fullyr+"-"+month+"-"+date+hrs+minutes+seconds;
-  // let name = "MyRun_" + timestamp;
-
-  //const {id, name, timestamp, sequenceResult} = action.payload;
-  // dispatch(addSequence({id, name, timestamp, scriptResult}));
 
   console.log(`Current Topics: ${JSON.stringify(sequences)}`)
 

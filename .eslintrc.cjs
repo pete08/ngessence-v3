@@ -2,11 +2,13 @@
 // NOTES:
 //      .CJS Extension: Allows this module to be interpreted as CommonJS module instead of ES module (App is set to accept ES modules, see "package.js")
 exports = {
+    parser: '@babel/eslint-parser',
     extends: [
       'react-app/jest',
-      'plugin:babel/recommended'
+      'plugin:babel/recommended',
+      'eslint:recommended'
     ],
-    plugins: ['babel'],
+    plugins: ['babel', 'import'],
     rules: {
       // 
     }
