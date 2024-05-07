@@ -9,7 +9,7 @@ export const addSequence = createAsyncThunk(
         return {
             id: id,
             timestamp: timestamp,
-            illuminaPass: "Quality check not Passed. Trim not processed.",
+            illuminaPass: "Sequence Not processed.",
             fileName: fileName,
             filepath: filepath,
             getfilepath: getfilepath,
@@ -34,7 +34,7 @@ export const addSequenceTrim = createAsyncThunk(
 
       return {
           id: id,
-          illuminaPass: "Quality Check not Passed",
+          illuminaPass: "Sequence processed using BBDuk",
           seqTrim: seqTrim,
           seqTrimTimeStamp: seqTrimTimeStamp,
       };

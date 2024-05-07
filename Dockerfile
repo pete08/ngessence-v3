@@ -1,29 +1,30 @@
 # get base image:
 FROM node:19-bullseye
 
-# Set working Dir
+# Set the working directory in the container
 WORKDIR /app
 
-# copy package and working directories  
-COPY package.json package-lock.json ./
+# Install OpenJDK
+RUN apt-get update && apt-get install -y openjdk-11-jre-headless
+
+# Copy the package.json and package-lock.json files
+COPY package*.json ./
 
 # Install dependencies
-# RUN npm cache clean --force
 RUN npm install
 
-# Copy the rest of the application code to the working dir
-COPY . . 
+# Copy the rest of the application
+COPY . .
 
-# Set an environment variable
-# ENV PORT=5000
-
-# Expose the port that the app will run on 
+# Expose the port the app runs on
 EXPOSE 5000
 
 # Tell docker to start the application
 CMD ["node", "server.js"]
 
+
+
 # NOTE to build docker image:
-    # $docker build -t ngessence:v3 . 
+    # $docker build -t ngessence:v3ii .
 # NOTE to build docker container:
-    # $docker run -d --name ngessencev3 -p 5000:5000 ngessence:v3    .....
+    # $docker run -d --name ngessencev3ii -p 5000:5000 ngessence:v3ii    .....

@@ -15,7 +15,8 @@ const getDateTime = () => {
   return dateTime;
 }
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
+// const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://rex7wrpzu2.us-east-1.awsapprunner.com';
 
 export default function Sequence({sequence}) {
   const dispatch = useDispatch();

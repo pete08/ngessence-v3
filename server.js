@@ -192,11 +192,10 @@ app.post("/runSeqTrim", upload.none(), (req, res) => {
           console.log(`XXX. /runSeqTrim: Error of try{BashScript}: ${error}`);
           return res.status(500).json({ error: "Internal Server Error" });
         }
-
+        console.error(`3. /runSeqTrim: ...NEW NEW NEW... Script errors: ${stderr}`);
         // Send the result back to the client
-        console.log(
-          `3. /runSeqTrim: end of try{BashScript} and before catch{}, This is stdout: ${stdout} - end of /runSeqTrim -\n\n`
-        );
+        console.log(`4. /runSeqTrim: ...NEW NEW NEW... Script output: ${stdout}. Output file intended location:${path.join(__dirname, seqTrimOutputFilePath)}`);
+        
         return res.json({ result: stdout });
       }
     );
@@ -206,14 +205,6 @@ app.post("/runSeqTrim", upload.none(), (req, res) => {
 });
 
 app.get("/dnldSeqTrim", (req, res) => {
-  // ensure the server side script outputs test file, and marke the file's content as such to allow for trust when users dnld the file output:
-  //https://developer.mozilla.org/en-US/docs/Learn/Server-side/Configuring_server_MIME_types
-  //    1. # How to set up your server to send the correct MIME types.
-  //    1a.
-  //      Using the download on NGEssence app:     "When using server-side script to generate content, the way to indicate the content type will depend on the tool you're using. Check the framework or library's documentation."
-  //      "Regardless of what server system you use, the effect you need to achieve is to set a response header with the name Content-Type, followed by a colon and space, followed by a MIME type.
-  //      add to Header: {"Content-Type": "text/plain"}
-
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type", "Content-Disposition");
