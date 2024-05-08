@@ -30,9 +30,9 @@ export default function Footer() {
     
     const iconList = [
         {title: "Mail", url: `mailto:...@gmail.com?subject=NGEssence Feedback/Question&body=Please Send To: ngessence.email@gmail.com`, src: `Icon_Mail_DblHlx.png`},
-        {title: "Twitter", url: `https://www.twitter.com/ngessence`, src: `Icon_Twitter_DblHlx.png`},
+        {title: "Twitter", url: `https://twitter.com/pete_develops`, src: `Icon_Twitter_DblHlx.png`},
         {title: "Github", url: `https://www.github.com/ngessence`, src: `Icon_Github_DblHlx.png`},
-        {title: "Linkedin", url: `https://www.linkedin.com/ngessence`, src: `Icon_Linkedin_DblHlx.png`},
+        {title: "Linkedin", url: `https://github.com/pete08/ngessence-v3`, src: `Icon_Linkedin_DblHlx.png`},
         {title: "FB", url: `https://www.facebook.com/ngessence`, src: `Icon_FB_DblHlx.png`},
         {title: "IG", url: `https://www.instagram.com/ngessence"`, src: `Icon_IG_DblHlx.png`},
         {title: "Repeating", url: ``, src: `Icon_Repeating_DblHlx.png`},

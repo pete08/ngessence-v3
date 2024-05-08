@@ -31,6 +31,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "sync": "aws s3 --region 'us-east-1' sync ./build 's3://ngessenceforcfd/'",
     "test": "jest",
     "eject": "react-scripts eject"
   },
