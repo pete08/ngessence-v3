@@ -7,8 +7,7 @@ This is the NGEssence app. Its goal is to allow users access to [BBTool's](https
 This allows users freedom to run [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/) outside of normal circumstances such as a new computer or on a mobile device and email resulting files to themselves.
 
 
-**My Goal**: Create a unique React Web App using knowledge/notes gained from Codecademy's JS FullStack path (inc. Redux Store State). Meanwhile this provides experiences navigating [MDN-Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript), [Stack Overflow](https://stackoverflow.com/), and practice using [OpenAI's Chat GPT](https://openai.com/blog/chatgpt) to assist in troubleshooting.
-
+**My Goal**: Create a unique React Web App using knowledge/notes gained from a JS FullStack path including: JS, CSS, Redux Store State, React, Express, API Methods, Testing, IDE, Git and Github, Docker Images and Containers, AWS ECR, AWS S3, AWS App Runner, AWS CloudFront, etc. I hope t understand more using  Meanwhile this provides experiences navigating [MDN-Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript), [Stack Overflow](https://stackoverflow.com/), and practice using [OpenAI's Chat GPT](https://openai.com/blog/chatgpt) to assist in troubleshooting.
 
 
 
